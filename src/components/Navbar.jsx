@@ -26,8 +26,8 @@ const Navbar = () => {
 
   return (
     <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'glass py-4 shadow-[0_4px_30px_rgba(0,0,0,0.3)] border-b border-white/5' : 'bg-transparent py-6'}`}>
-      <div className="container mx-auto px-6 md:px-12 flex justify-between items-center">
-        <Link to="home" smooth duration={500} className="text-2xl font-bold cursor-pointer text-[#e2e8f0]">
+      <div className="container mx-auto px-6 md:px-12 flex justify-center items-center relative">
+        <Link to="home" smooth duration={500} className="absolute left-0 text-2xl font-bold cursor-pointer text-[#e2e8f0]">
           MK<span className="text-[#38bdf8]">.</span>
         </Link>
 
@@ -47,7 +47,7 @@ const Navbar = () => {
           ))}
         </div>
 
-        <div className="md:hidden">
+        <div className="absolute right-0 md:hidden">
           <button onClick={() => setIsOpen(!isOpen)} className="text-[#e2e8f0] focus:outline-none">
             {isOpen ? <HiX size={28} /> : <HiMenu size={28} />}
           </button>

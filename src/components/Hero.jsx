@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { FiDownload } from 'react-icons/fi';
 import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
 import Hero3D from './Hero3D';
-import HeroProfile3D from './HeroProfile3D';
 
 const Hero = () => {
   return (
@@ -13,7 +12,7 @@ const Hero = () => {
       </div>
       
       <div className="container mx-auto px-6 md:px-12 relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-        {/* Left Side: Text */}
+        {/* Left Side: Text Content */}
         <motion.div 
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
@@ -48,15 +47,19 @@ const Hero = () => {
           </div>
         </motion.div>
 
-        {/* Right Side: 3D Scene */}
+        {/* Right Side: Image Space */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="flex justify-center"
+          className="flex justify-center items-center"
         >
-          <div className="relative w-72 h-72 md:w-[420px] md:h-[420px] rounded-full overflow-hidden border border-[#38bdf8]/20 shadow-[0_0_60px_rgba(56,189,248,0.15)]">
-            <HeroProfile3D />
+          <div className="relative w-72 h-72 md:w-96 md:h-96 rounded-lg overflow-hidden border-2 border-[#38bdf8]/40 shadow-[0_0_60px_rgba(56,189,248,0.15)] bg-gradient-to-br from-[#38bdf8]/10 to-[#0ea5e9]/10 flex items-center justify-center">
+            {/* Placeholder for image */}
+            <div className="flex flex-col items-center justify-center">
+              <div className="text-6xl text-[#38bdf8]/30 mb-4">📸</div>
+              <p className="text-[#38bdf8]/50 text-center text-sm">Your Image Here</p>
+            </div>
           </div>
         </motion.div>
       </div>
