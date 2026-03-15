@@ -17,8 +17,8 @@ const FloatingSkill = ({ position, skill, speed }) => {
       <mesh>
         <boxGeometry args={[0.4, 0.4, 0.4]} />
         <meshStandardMaterial
-          color="#38bdf8"
-          emissive="#0ea5e9"
+          color="#8b6f47"
+          emissive="#a0826d"
           emissiveIntensity={0.8}
           metalness={0.7}
           roughness={0.2}
@@ -81,8 +81,8 @@ const Skills3DScene = () => {
       <mesh>
         <octahedronGeometry args={[0.5, 2]} />
         <meshStandardMaterial
-          color="#38bdf8"
-          emissive="#0ea5e9"
+          color="#8b6f47"
+          emissive="#a0826d"
           emissiveIntensity={1.5}
           metalness={0.9}
           roughness={0.1}
@@ -103,11 +103,11 @@ const Skills3DScene = () => {
       <mesh>
         <icosahedronGeometry args={[3.3, 2]} />
         <meshStandardMaterial
-          color="#38bdf8"
+          color="#8b6f47"
           wireframe
           transparent
           opacity={0.15}
-          emissive="#38bdf8"
+          emissive="#8b6f47"
           emissiveIntensity={0.2}
         />
       </mesh>
@@ -119,10 +119,10 @@ const Skills3D = () => {
   return (
     <div className="w-full h-[500px]">
       <Canvas camera={{ position: [0, 0, 8], fov: 50 }}>
-        <color attach="background" args={['#0f172a']} />
+        <color attach="background" args={['#faf8f3']} />
         <ambientLight intensity={0.7} />
-        <pointLight position={[10, 10, 10]} intensity={2} color="#38bdf8" />
-        <pointLight position={[-10, -10, -10]} intensity={1.5} color="#0ea5e9" />
+        <pointLight position={[10, 10, 10]} intensity={2} color="#8b6f47" />
+        <pointLight position={[-10, -10, -10]} intensity={1.5} color="#a0826d" />
         <Float speed={0.5} rotationIntensity={0.3} floatIntensity={0.5}>
           <Skills3DScene />
         </Float>

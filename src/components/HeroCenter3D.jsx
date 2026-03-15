@@ -16,8 +16,8 @@ const FloatingBox = ({ position, speed }) => {
     <mesh ref={meshRef} position={position}>
       <boxGeometry args={[1, 1, 1]} />
       <meshStandardMaterial
-        color="#38bdf8"
-        emissive="#0ea5e9"
+        color="#c9a961"
+        emissive="#9b8b7e"
         emissiveIntensity={0.5}
         metalness={0.8}
         roughness={0.2}
@@ -41,8 +41,8 @@ const CenterGeometry = () => {
       <mesh>
         <octahedronGeometry args={[0.8, 3]} />
         <meshStandardMaterial
-          color="#38bdf8"
-          emissive="#0ea5e9"
+          color="#c9a961"
+          emissive="#9b8b7e"
           emissiveIntensity={1.5}
           metalness={0.9}
           roughness={0.1}
@@ -59,11 +59,11 @@ const CenterGeometry = () => {
       <mesh>
         <icosahedronGeometry args={[2.5, 1]} />
         <meshStandardMaterial
-          color="#38bdf8"
+          color="#c9a961"
           wireframe
           transparent
           opacity={0.2}
-          emissive="#38bdf8"
+          emissive="#c9a961"
           emissiveIntensity={0.3}
         />
       </mesh>
@@ -75,10 +75,10 @@ const HeroCenter3D = () => {
   return (
     <div className="w-full h-full">
       <Canvas camera={{ position: [0, 0, 6], fov: 50 }}>
-        <color attach="background" args={['#000000']} />
+        <color attach="background" args={['#1a1a1a']} />
         <ambientLight intensity={0.6} />
-        <pointLight position={[10, 10, 10]} intensity={2} color="#38bdf8" />
-        <pointLight position={[-10, -10, -10]} intensity={1.5} color="#0ea5e9" />
+        <pointLight position={[10, 10, 10]} intensity={2} color="#c9a961" />
+        <pointLight position={[-10, -10, -10]} intensity={1.5} color="#9b8b7e" />
         <Float speed={1.5} rotationIntensity={0.4} floatIntensity={1}>
           <CenterGeometry />
         </Float>

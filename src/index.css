@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-primary: #38bdf8;
-  --color-brand-secondary: #0ea5e9;
-  --color-bg: #000000;
-  --color-card: #0f172a;
-  --color-text: #e2e8f0;
-  --color-glass: rgba(30, 41, 59, 0.7);
+  --color-brand-primary: #c9a961;
+  --color-brand-secondary: #9b8b7e;
+  --color-bg: #1a1a1a;
+  --color-card: #242424;
+  --color-text: #e8e8e8;
+  --color-glass: rgba(40, 40, 40, 0.6);
   --font-sans: 'Inter', system-ui, sans-serif;
 }
 

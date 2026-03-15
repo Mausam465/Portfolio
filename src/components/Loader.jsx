@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 
 const Loader = () => {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0f172a]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#1a1a1a]">
       <motion.div
         className="flex space-x-2"
         initial={{ opacity: 0 }}
@@ -12,7 +12,7 @@ const Loader = () => {
         {[0, 1, 2].map((index) => (
           <motion.div
             key={index}
-            className="w-4 h-4 bg-[#38bdf8] rounded-full"
+            className="w-4 h-4 bg-[#c9a961] rounded-full"
             animate={{
               y: ["0%", "-50%", "0%"],
             }}

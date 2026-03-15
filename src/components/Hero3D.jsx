@@ -24,7 +24,7 @@ const InteractiveParticles = (props) => {
       <Points ref={ref} positions={sphere} stride={3} frustumCulled={false} {...props}>
         <PointMaterial
           transparent
-          color="#8b5cf6"
+          color="#8b6f47"
           size={0.012}
           sizeAttenuation={true}
           depthWrite={false}

@@ -28,8 +28,8 @@ const AnimatedNetwork = () => {
       <mesh ref={meshRef}>
         <octahedronGeometry args={[0.6, 2]} />
         <MeshDistortMaterial
-          color="#38bdf8"
-          emissive="#0ea5e9"
+          color="#8b6f47"
+          emissive="#a0826d"
           emissiveIntensity={1.5}
           distort={0.3}
           speed={2.5}
@@ -52,8 +52,8 @@ const AnimatedNetwork = () => {
       <mesh scale={[1.3, 1.3, 1.3]} rotation={[Math.PI / 2.5, 0.2, 0]}>
         <torusGeometry args={[1, 0.04, 16, 100]} />
         <meshStandardMaterial
-          color="#38bdf8"
-          emissive="#38bdf8"
+          color="#8b6f47"
+          emissive="#8b6f47"
           emissiveIntensity={0.5}
           transparent
           opacity={0.4}
@@ -83,8 +83,8 @@ const NetworkNode = ({ node }) => {
     <mesh ref={nodeRef}>
       <sphereGeometry args={[1, 8, 8]} />
       <meshStandardMaterial
-        color="#0ea5e9"
-        emissive="#38bdf8"
+        color="#a0826d"
+        emissive="#8b6f47"
         emissiveIntensity={2.5}
         toneMapped={false}
       />
@@ -117,8 +117,8 @@ const OrbitalTrail = ({ index }) => {
     <mesh ref={trailRef}>
       <sphereGeometry args={[1, 8, 8]} />
       <meshStandardMaterial
-        color="#38bdf8"
-        emissive="#38bdf8"
+        color="#8b6f47"
+        emissive="#8b6f47"
         emissiveIntensity={2}
         toneMapped={false}
       />
@@ -130,10 +130,10 @@ const HeroProfile3D = () => {
   return (
     <div className="w-full h-full">
       <Canvas camera={{ position: [0, 0, 4.5], fov: 50 }}>
-        <color attach="background" args={['#000000']} />
+        <color attach="background" args={['#faf8f3']} />
         <ambientLight intensity={0.5} />
-        <pointLight position={[10, 10, 10]} intensity={3} color="#38bdf8" />
-        <pointLight position={[-10, -10, -10]} intensity={2} color="#0ea5e9" />
+        <pointLight position={[10, 10, 10]} intensity={3} color="#8b6f47" />
+        <pointLight position={[-10, -10, -10]} intensity={2} color="#a0826d" />
         <pointLight position={[0, 0, 8]} intensity={2.5} color="#ffffff" />
         <Stars radius={80} depth={50} count={3000} factor={4} fade speed={0.5} />
         <AnimatedNetwork />

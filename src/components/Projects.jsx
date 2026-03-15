@@ -38,11 +38,11 @@ const Projects = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-bold mb-4 text-[#e2e8f0]"
+            className="text-4xl md:text-5xl font-bold mb-4 text-[#e8e8e8]"
           >
             Featured <span className="text-gradient">Projects</span>
           </motion.h2>
-          <div className="w-24 h-1 bg-brand-primary mx-auto rounded-full shadow-[0_0_10px_rgba(56,189,248,0.5)]"></div>
+          <div className="w-24 h-1 bg-[#c9a961] mx-auto rounded-full shadow-[0_0_10px_rgba(201,169,97,0.3)]"></div>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -53,7 +53,7 @@ const Projects = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
-              className="glass rounded-2xl overflow-hidden flex flex-col h-full group border border-white/5 hover:border-[#38bdf8]/30 transition-all duration-300"
+              className="glass rounded-2xl overflow-hidden flex flex-col h-full group border border-[#c9a961]/10 hover:border-[#c9a961]/30 transition-all duration-300"
             >
               <div className="relative h-48 sm:h-56 overflow-hidden">
                 <img 
@@ -61,26 +61,26 @@ const Projects = () => {
                   alt={project.title} 
                   className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100"
                 />
-                <div className="absolute inset-0 bg-slate-900/30 group-hover:bg-transparent transition-colors duration-300"></div>
+                <div className="absolute inset-0 bg-[#1a1a1a]/30 group-hover:bg-transparent transition-colors duration-300"></div>
               </div>
               
-              <div className="p-6 flex flex-col flex-grow bg-slate-800/50 backdrop-blur-sm">
-                <h3 className="text-2xl font-bold mb-3 text-slate-200 group-hover:text-[#38bdf8] transition-colors">{project.title}</h3>
-                <p className="text-slate-400 text-sm mb-6 flex-grow">{project.description}</p>
+              <div className="p-6 flex flex-col flex-grow bg-[#242424]/50 backdrop-blur-sm">
+                <h3 className="text-2xl font-bold mb-3 text-[#e8e8e8] group-hover:text-[#c9a961] transition-colors">{project.title}</h3>
+                <p className="text-[#a8a8b8] text-sm mb-6 flex-grow">{project.description}</p>
                 
                 <div className="flex flex-wrap gap-2 mb-6">
                   {project.tech.map((t, i) => (
-                    <span key={i} className="text-xs px-3 py-1 bg-[#0f172a] text-[#38bdf8] font-medium rounded-full border border-white/5">
+                    <span key={i} className="text-xs px-3 py-1 bg-[#1a1a1a] text-[#c9a961] font-medium rounded-full border border-[#c9a961]/10">
                       {t}
                     </span>
                   ))}
                 </div>
                 
                 <div className="flex gap-4 mt-auto">
-                  <a href={project.github} className="flex-1 flex items-center justify-center gap-2 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold transition-all shadow-sm border border-white/5">
+                  <a href={project.github} className="flex-1 flex items-center justify-center gap-2 py-2 rounded-lg bg-[#242424] hover:bg-[#2a2a2a] text-[#e8e8e8] text-sm font-semibold transition-all shadow-sm border border-[#c9a961]/10">
                     <FaGithub /> Source
                   </a>
-                  <a href={project.live} className="flex-1 flex items-center justify-center gap-2 py-2 rounded-lg bg-gradient-to-r from-[#0ea5e9] to-[#38bdf8] hover:opacity-90 text-white text-sm font-semibold transition-opacity shadow-[0_4px_15px_rgba(56,189,248,0.3)] hover:shadow-[0_4px_25px_rgba(56,189,248,0.5)]">
+                  <a href={project.live} className="flex-1 flex items-center justify-center gap-2 py-2 rounded-lg bg-gradient-to-r from-[#9b8b7e] to-[#c9a961] hover:opacity-90 text-[#0f0f1e] text-sm font-semibold transition-opacity shadow-[0_4px_15px_rgba(201,169,97,0.3)] hover:shadow-[0_4px_25px_rgba(201,169,97,0.5)]">
                     <FaExternalLinkAlt className="text-xs" /> Demo
                   </a>
                 </div>

@@ -25,10 +25,10 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'glass py-4 shadow-[0_4px_30px_rgba(0,0,0,0.3)] border-b border-white/5' : 'bg-transparent py-6'}`}>
+    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'glass py-4 shadow-[0_4px_30px_rgba(0,0,0,0.1)] border-b border-[#c9a961]/10' : 'bg-transparent py-6'}`}>
       <div className="container mx-auto px-6 md:px-12 flex justify-center items-center relative">
-        <Link to="home" smooth duration={500} className="absolute left-0 text-2xl font-bold cursor-pointer text-[#e2e8f0]">
-          MK<span className="text-[#38bdf8]">.</span>
+        <Link to="home" smooth duration={500} className="absolute left-0 text-2xl font-bold cursor-pointer text-[#e8e8e8]">
+          MK<span className="text-[#c9a961]">.❑</span>
         </Link>
 
         <div className="hidden md:flex space-x-6 lg:space-x-8">
@@ -39,8 +39,8 @@ const Navbar = () => {
               smooth
               duration={500}
               spy
-              activeClass="text-[#38bdf8]"
-              className="text-sm font-medium text-slate-300 hover:text-[#38bdf8] cursor-pointer transition-colors"
+              activeClass="text-[#c9a961]"
+              className="text-sm font-medium text-[#b8b8c8] hover:text-[#c9a961] cursor-pointer transition-colors"
             >
               {item.name}
             </Link>
@@ -48,7 +48,7 @@ const Navbar = () => {
         </div>
 
         <div className="absolute right-0 md:hidden">
-          <button onClick={() => setIsOpen(!isOpen)} className="text-[#e2e8f0] focus:outline-none">
+          <button onClick={() => setIsOpen(!isOpen)} className="text-[#e8e8e8] focus:outline-none">
             {isOpen ? <HiX size={28} /> : <HiMenu size={28} />}
           </button>
         </div>
@@ -60,7 +60,7 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden glass border-t border-white/5"
+            className="md:hidden glass border-t border-[#c9a961]/10"
           >
             <div className="flex flex-col px-6 py-4 space-y-4">
               {navItems.map((item) => (
@@ -70,9 +70,9 @@ const Navbar = () => {
                   smooth
                   duration={500}
                   spy
-                  activeClass="text-[#38bdf8]"
+                  activeClass="text-[#c9a961]"
                   onClick={() => setIsOpen(false)}
-                  className="text-base font-medium text-slate-300 hover:text-[#38bdf8] cursor-pointer transition-colors"
+                  className="text-base font-medium text-[#b8b8c8] hover:text-[#c9a961] cursor-pointer transition-colors"
                 >
                   {item.name}
                 </Link>

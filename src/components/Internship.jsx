@@ -6,7 +6,7 @@ const internships = [
   {
     role: 'Frontend Developer Intern',
     company: 'Tech Solutions Inc.',
-    duration: 'May 2025 - Aug 2025',
+    duration: 'June 2025 - Sep 2025',
     description: [
       'Developed and maintained responsive user interfaces using React and Tailwind CSS.',
       'Collaborated with the design team to implement modern soft glassmorphism UI components.',
@@ -16,7 +16,7 @@ const internships = [
   {
     role: 'Web Design Intern',
     company: 'Creative Agency',
-    duration: 'Jan 2025 - Apr 2025',
+    duration: 'Oct 2025 - Feb 2026',
     description: [
       'Assisted in creating wireframes and high-fidelity prototypes in Figma.',
       'Translated designs into interactive front-end code using HTML, CSS, and JS.',
@@ -33,15 +33,15 @@ const Internship = () => (
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-4xl md:text-5xl font-bold mb-4 text-[#e2e8f0]"
+          className="text-4xl md:text-5xl font-bold mb-4 text-[#e8e8e8]"
         >
           My <span className="text-gradient">Internships</span>
         </motion.h2>
-        <div className="w-24 h-1 bg-[#38bdf8] mx-auto rounded-full shadow-[0_0_10px_rgba(56,189,248,0.5)]"></div>
+        <div className="w-24 h-1 bg-[#c9a961] mx-auto rounded-full shadow-[0_0_10px_rgba(201,169,97,0.3)]"></div>
       </div>
 
       <div className="max-w-4xl mx-auto relative">
-        <div className="absolute left-[19px] md:left-1/2 top-0 bottom-0 w-0.5 bg-slate-800 transform md:-translate-x-1/2"></div>
+        <div className="absolute left-[19px] md:left-1/2 top-0 bottom-0 w-0.5 bg-[#7a7a8a] transform md:-translate-x-1/2"></div>
 
         {internships.map((internship, index) => (
           <div
@@ -50,8 +50,8 @@ const Internship = () => (
           >
             <div className="hidden md:block w-5/12"></div>
 
-            <div className="z-20 flex items-center justify-center w-10 h-10 bg-slate-800 shadow-[0_0_15px_rgba(56,189,248,0.2)] rounded-full border-2 border-[#38bdf8] absolute left-0 md:left-1/2 transform md:-translate-x-1/2">
-              <FaBriefcase className="text-[#38bdf8]" />
+            <div className="z-20 flex items-center justify-center w-10 h-10 bg-[#242424] shadow-[0_0_15px_rgba(201,169,97,0.2)] rounded-full border-2 border-[#c9a961] absolute left-0 md:left-1/2 transform md:-translate-x-1/2">
+              <FaBriefcase className="text-[#c9a961]" />
             </div>
 
             <motion.div
@@ -61,13 +61,13 @@ const Internship = () => (
               transition={{ duration: 0.6 }}
               className="w-full md:w-5/12 pl-12 md:pl-0"
             >
-              <div className="glass p-6 rounded-2xl border border-white/5 hover:border-[#38bdf8]/30 transition-all duration-300">
-                <span className="text-sm font-semibold text-[#38bdf8] mb-2 inline-block px-3 py-1 bg-[#38bdf8]/10 rounded-full">
+              <div className="glass p-6 rounded-2xl border border-[#c9a961]/10 hover:border-[#c9a961]/30 transition-all duration-300">
+                <span className="text-sm font-semibold text-[#c9a961] mb-2 inline-block px-3 py-1 bg-[#c9a961]/10 rounded-full">
                   {internship.duration}
                 </span>
-                <h3 className="text-2xl font-bold mb-1 text-slate-200">{internship.role}</h3>
-                <h4 className="text-lg text-slate-400 mb-4">{internship.company}</h4>
-                <ul className="list-disc list-inside space-y-2 text-slate-400">
+                <h3 className="text-2xl font-bold mb-1 text-[#e8e8e8]">{internship.role}</h3>
+                <h4 className="text-lg text-[#a8a8b8] mb-4">{internship.company}</h4>
+                <ul className="list-disc list-inside space-y-2 text-[#a8a8b8]">
                   {internship.description.map((item, i) => (
                     <li key={i} className="text-sm leading-relaxed">{item}</li>
                   ))}
