@@ -114,7 +114,7 @@ const Skills3DCarousel = () => {
       </div>
 
       {/* Navigation Dots */}
-      <div className="flex justify-center gap-3 mt-16">
+      <div className="flex justify-center gap-3 mt-2">
         {skillCategories.map((_, idx) => (
           <button
             key={idx}
@@ -145,7 +145,7 @@ const Skills = () => (
       </div>
 
       {/* 3D Skills Carousel */}
-      <div className="flex justify-center items-center pb-20">
+      <div className="flex justify-center items-center pb-20 mt-8">
         <Skills3DCarousel />
       </div>
     </div>

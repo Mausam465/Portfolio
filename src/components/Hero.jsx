@@ -25,21 +25,6 @@ const Hero = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // Handle scroll for text visibility
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-      if (textContainerRef.current) {
-        const opacity = Math.min(window.scrollY / 200, 1);
-        textContainerRef.current.style.opacity = opacity;
-        textContainerRef.current.style.transform = `translateY(${Math.max(0, 100 - window.scrollY / 2)}px)`;
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center pt-20 bg-[#1a1a1a] overflow-hidden">
       {/* Background Glow */}
@@ -175,10 +160,6 @@ const Hero = () => {
           <motion.div
             ref={textContainerRef}
             className="flex flex-col space-y-6 text-center lg:text-left max-w-2xl lg:order-2"
-            style={{
-              opacity: 0,
-              pointerEvents: scrollY > 50 ? 'auto' : 'none',
-            }}
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
@@ -195,18 +176,49 @@ const Hero = () => {
             </p>
 
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4">
-              <a
-                href="/resume.pdf"
-                download
-                className="px-8 py-3 rounded-full bg-gradient-to-r from-[#c9a961] to-[#9b8b7e] text-[#0f0f1e] font-semibold hover:opacity-90 transition-opacity flex items-center gap-2 shadow-[0_4px_20px_rgba(201,169,97,0.3)] hover:shadow-[0_4px_30px_rgba(201,169,97,0.4)]"
+              <motion.a
+                href="https://ik.imagekit.io/vzxwc5boa/Muasam_Final_CV.pdf?updatedAt=1773521178613"
+                download="Mausam_CV.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(201, 169, 97, 0.6)" }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-3 rounded-full bg-gradient-to-r from-[#c9a961] to-[#9b8b7e] text-[#0f0f1e] font-bold flex items-center gap-2 shadow-[0_4px_20px_rgba(201,169,97,0.3)] hover:brightness-110 transition-all"
               >
                 Download Resume <FiDownload />
-              </a>
+              </motion.a>
 
               <div className="flex items-center gap-4 text-2xl">
-                <a href="https://github.com/Mausam465" target="_blank" rel="noreferrer" className="text-[#9b8b7e] hover:text-[#c9a961] transition-colors"><FaGithub /></a>
-                <a href="https://linkedin.com/in/mausam-kumari" target="_blank" rel="noreferrer" className="text-[#9b8b7e] hover:text-[#c9a961] transition-colors"><FaLinkedin /></a>
-                <a href="mailto:mausam@example.com" className="text-[#9b8b7e] hover:text-[#c9a961] transition-colors"><FaEnvelope /></a>
+                <motion.a 
+                  href="https://github.com/Mausam465" 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  className="text-[#9b8b7e]"
+                  whileHover={{ scale: 1.2, color: "#ffffff" }} // White for GitHub
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <FaGithub />
+                </motion.a>
+                <motion.a 
+                  href="https://www.linkedin.com/in/mausamkumari01/" 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  className="text-[#9b8b7e]"
+                  whileHover={{ scale: 1.2, color: "#0A66C2" }} // LinkedIn Blue
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <FaLinkedin />
+                </motion.a>
+                <motion.a 
+                  href="mailto:mausamkumari9095@gmail.com" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#9b8b7e]"
+                  whileHover={{ scale: 1.2, color: "#EA4335" }} // Gmail Red
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <FaEnvelope />
+                </motion.a>
               </div>
             </div>
           </motion.div>
