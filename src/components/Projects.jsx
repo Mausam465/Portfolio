@@ -268,7 +268,7 @@ const Card = ({ i, title, description, image, live, tech, progress, range, targe
             >
               {title}
             </h3>
-            <p className="text-[#7a7a8a] text-sm leading-relaxed flex-1">{description}</p>
+            <p className="text-[#7a7a8a] text-s leading-relaxed flex-1">{description}</p>
             <div className="mt-8">
               <a
                 href={live}
@@ -316,8 +316,7 @@ const Projects = () => {
   });
 
   return (
-    <section ref={container} className="relative z-10 bg-[#111]">
-      <div className="pt-24 pb-8 px-6 text-center">
+    <section id="projects" ref={container} className="relative z-10 bg-[#111]">      <div className="pt-24 pb-8 px-6 text-center">
         <motion.h2
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}

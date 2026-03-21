@@ -117,7 +117,7 @@ const Skills = () => {
     const headingOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
 
     return (
-        <section ref={containerRef} className="relative h-[300vh] bg-[#1a1a1a]">
+        <section id="skills" ref={containerRef} className="relative h-[300vh] bg-[#1a1a1a]">
             <div className="sticky top-0 w-full h-screen flex items-center justify-center overflow-hidden perspective-1000">
                 
                 {/* Dark Radial Background */}
