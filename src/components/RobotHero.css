@@ -3,16 +3,15 @@
 /* Theme Variables */
 .robot-hero-container {
   --bg: #1a1a1a;
-  --cyan: #c9a961; /* Gold Primary */
-  --lime: #e8e8e8; /* Text / White */
-  --pink: #9b8b7e; /* Secondary Brand */
+  --cyan: #c9a961;
+  --lime: #e8e8e8;
+  --pink: #9b8b7e;
   --white: #e8e8e8;
 
   background: var(--bg);
   font-family: 'Space Mono', monospace;
   color: var(--white);
-  /* The container is now the scroll track */
-  height: 250vh; 
+  height: 200vh;
   position: relative;
   z-index: 1;
 }
@@ -24,7 +23,6 @@
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  /* Center content structure mainly handled by absolute positioning now */
 }
 
 /* Custom Cursor */
@@ -54,9 +52,9 @@
   transition: opacity 0.3s;
 }
 
-/* Scanlines & Grain */
+/* Scanlines */
 .scan {
-  position: fixed; /* Fixed to viewport */
+  position: fixed;
   inset: 0;
   z-index: 10;
   pointer-events: none;
@@ -65,7 +63,7 @@
   height: 100vh;
 }
 
-/* Background Grids (using pseudo-elements on sticky container) */
+/* Background Grid */
 .hero-sticky::before {
   content: '';
   position: absolute;
@@ -90,7 +88,7 @@
   to { background-position: 0 52px }
 }
 
-/* Blobs - relative to sticky container */
+/* Blobs */
 .blob {
   position: absolute;
   border-radius: 50%;
@@ -108,21 +106,17 @@
   to { transform: translate(25px, 25px) scale(1.08) }
 }
 
-/* Scene (Robot) */
+/* ── DESKTOP: Scene (Robot) ── */
 #scene {
   width: 320px;
   height: 460px;
   position: absolute;
-  z-index: 5; /* Above background */
+  z-index: 5;
   perspective: 700px;
-  
-  /* Initial Position: Centered and slightly lowered as requested */
   left: 50%;
-  top: 60%; 
+  top: 60%;
   transform: translate(-50%, -50%);
-  
-  /* Transitions handled by React/JS for scroll, but add simple transition for smoothness where JS might be jittery */
-  will-change: left, transform;
+  will-change: left, top, transform, opacity;
 }
 
 #robot-wrap {
@@ -160,12 +154,12 @@
   overflow: visible;
 }
 
-/* Text Section - Initially Hidden/Offset */
+/* ── DESKTOP: Text Section ── */
 #text-section {
   position: absolute;
   right: 10%;
-  top: 55%; 
-  transform: translate(50px, -50%); /* Start slightly right */
+  top: 55%;
+  transform: translate(50px, -50%);
   width: 40%;
   max-width: 600px;
   opacity: 0;
@@ -174,7 +168,7 @@
   will-change: opacity, transform;
 }
 
-/* Profile Image - Initially Hidden */
+/* ── DESKTOP: Profile Image ── */
 #profile-image {
   position: absolute;
   right: 62%;
@@ -187,56 +181,132 @@
   overflow: hidden;
   border: 2px solid var(--cyan);
   box-shadow: 0 0 20px rgba(201, 169, 97, 0.3);
-  will-change: opacity, transform;
+  will-change: opacity;
   transform: translateY(-50%);
 }
 
-/* If screen is small, stack them instead (handled via media query usually, but for this specific scroll interaction we might need to disable it on mobile or adjust logic) */
+/* ══════════════════════════════════════════════════════════════
+   MOBILE — sticky scroll crossfade: robot → profile photo
+   ══════════════════════════════════════════════════════════════ */
 @media (max-width: 768px) {
+
+  /* 1. Tall scroll track — DO NOT set height:auto or position:relative here */
   .robot-hero-container {
-    height: auto; /* disable scroll jack on mobile */
-    min-height: 100vh;
+    height: 180vh !important;
+    position: relative !important;
   }
+
+  /* 2. Sticky viewport — stays pinned while user scrolls the track */
   .hero-sticky {
-    position: relative;
-    height: auto;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    padding-top: 80px;
-    padding-bottom: 50px;
+    position: sticky !important;
+    top: 0 !important;
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    overflow: hidden !important;
+    display: block !important;       /* NOT flex */
+    padding: 0 !important;
+    background: var(--bg) !important; /* Forces background to cover gap */
   }
+
+  /* 3. Robot — absolutely centered in the sticky panel */
   #scene {
-    position: relative;
-    left: auto !important;
-    top: auto !important;
-    transform: none !important;
-    margin-bottom: 40px;
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) scale(0.95) !important;
+    width: 320px !important;
+    height: 460px !important;
+    opacity: 1;                      /* JS drives opacity to 0 on scroll */
+    will-change: opacity !important;
+    z-index: 5 !important;
+    margin: 0 !important;
+    right: auto !important;
+    bottom: auto !important;
   }
-  #text-section {
-    position: relative;
-    right: auto;
-    top: auto;
-    transform: none !important;
-    opacity: 1 !important;
-    width: 90%;
-    margin: 0 auto;
-    text-align: center;
-  }
+
+  /* 4. Profile photo — same center point, crossfades IN as robot fades OUT */
   #profile-image {
-    position: relative;
-    left: auto !important;
-    top: auto !important;
-    transform: none !important;
-    opacity: 1 !important;
-    width: 260px;
-    height: 370px;
-    margin: 40px auto 0;
+    position: absolute !important;
+    left: 50% !important;
+    top: 22% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 200px !important;
+    height: 200px !important;
+    border-radius: 50% !important;
+    opacity: 0;                      /* JS drives opacity to 1 on scroll */
+    visibility: visible !important;
+    will-change: opacity !important;
+    z-index: 6 !important;
+    border: 3px solid rgba(201, 169, 97, 0.7) !important;
+    box-shadow: 0 0 0 8px rgba(201, 169, 97, 0.1), 0 0 50px rgba(201, 169, 97, 0.3) !important;
+    right: auto !important;
+    bottom: auto !important;
+    margin: 0 !important;
+    /* NO CSS transition — JS controls it frame by frame */
+    transition: none !important;
   }
-  .scan { position: absolute; }
+
+  #profile-image img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: top center !important;
+  }
+
+  /* 5. Text — fades in below the image after robot disappears */
+  #text-section {
+    position: absolute !important;
+    left: 50% !important;
+    top: 42% !important;
+    bottom: auto !important;
+    right: auto !important;
+    transform: translateX(-50%) translateY(30px) !important; /* JS overrides translateY */
+    width: 88% !important;
+    max-width: 400px !important;
+    text-align: center !important;
+    opacity: 0;                      /* JS drives opacity to 1 on scroll */
+    visibility: visible !important;
+    will-change: opacity, transform !important;
+    z-index: 7 !important;
+    /* NO CSS transition — JS controls it */
+    transition: none !important;
+  }
+
+  #text-section .ctas {
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+    gap: 14px !important;
+  }
+
+  .hero-heading {
+    font-size: clamp(1.8rem, 7vw, 2.6rem) !important;
+  }
+
+  .role {
+    font-size: 1rem !important;
+  }
+
+  .bio {
+    font-size: 0.82rem !important;
+    /* Truncate long bio on mobile */
+    display: -webkit-box !important;
+    -webkit-line-clamp: 4 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+
+  /* Scanline: fixed still works on mobile */
+  .scan {
+    position: fixed !important;
+  }
+
+  /* Hide the desktop cursor dot on touch devices */
+  #cur, #cur-ring {
+    display: none !important;
+  }
 }
 
-/* Animations from original file */
+/* ── Animations ── */
 .sparkle { animation: sk 2s ease-in-out infinite alternate; transform-origin: center; }
 @keyframes sk { from { opacity: .7; transform: scale(0.8); } to { opacity: 1; transform: scale(1.1); } }
 
@@ -256,15 +326,14 @@
 .ear-r { animation: el 6s .3s ease-in-out infinite; transform-origin: 234px 132px; }
 @keyframes el { 0%, 100% { transform: rotate(0deg) } 30% { transform: rotate(4deg) } 60% { transform: rotate(-4deg) } }
 
-/* Text Styles */
+/* ── Text Styles ── */
 .tag { font-family: 'Arial', sans-serif; color: var(--cyan); margin-bottom: 10px; display: block; font-size: 16px; font-weight: normal; }
-.hero-heading { font-family: 'Arial', sans-serif; font-size: 3.5rem; line-height: 1.2; margin-bottom: 15px; color: var(--white); text-shadow: none; font-weight: 300; }
-.hero-heading .hi { display: block; font-size: 1.5rem; font-weight: 400; color: #ccc; margin-bottom: 5px; }
+.hero-heading { font-family: 'Arial', sans-serif; font-size: 3.5rem; line-height: 1.2; margin-bottom: 15px; color: var(--white); font-weight: 300; }
 .hero-heading .nm { color: var(--cyan); }
 .role { font-family: 'Arial', sans-serif; font-size: 1.6rem; margin-bottom: 20px; color: #e8e8e8; display: block; font-weight: normal; }
 .bio { font-family: 'Arial', sans-serif; font-size: 1.08rem; line-height: 1.6; color: #d0d0d0; margin-bottom: 30px; max-width: 800px; font-weight: normal; }
 .ctas { display: flex; gap: 20px; }
-.btn-hero { padding: 12px 28px; border-radius: 4px; text-decoration: none; font-weight: 600; font-family: 'Arial', sans-serif; letter-spacing: 0px; transition: all 0.3s; position: relative; overflow: hidden; }
+.btn-hero { padding: 12px 28px; border-radius: 4px; text-decoration: none; font-weight: 600; font-family: 'Arial', sans-serif; transition: all 0.3s; position: relative; overflow: hidden; }
 .bp { background: var(--cyan); color: #000; border: 1px solid var(--cyan); }
 .bp:hover { background: transparent; color: var(--cyan); box-shadow: 0 0 15px rgba(201,169,97,0.4); }
 .bo { background: transparent; color: var(--cyan); border: 1px solid var(--cyan); }
@@ -286,4 +355,3 @@
 .sa { width: 20px; height: 32px; border: 2px solid var(--cyan); border-radius: 12px; position: relative; }
 .sa::before { content: ''; position: absolute; top: 6px; left: 50%; transform: translateX(-50%); width: 2px; height: 6px; background: var(--cyan); border-radius: 2px; animation: sc 1.5s infinite; }
 @keyframes sc { 0% { top: 6px; opacity: 1; } 100% { top: 18px; opacity: 0; } }
-

@@ -25,13 +25,13 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'glass py-4 shadow-[0_4px_30px_rgba(0,0,0,0.1)] border-b border-[#c9a961]/10' : 'bg-transparent py-6'}`}>
-      <div className="container mx-auto px-6 md:px-12 flex justify-center items-center relative">
-        <Link to="home" smooth duration={500} className="absolute left-0 text-2xl font-bold cursor-pointer text-[#e8e8e8]">
+    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? 'glass py-4 shadow-[0_4px_30px_rgba(0,0,0,0.1)] border-b border-[#c9a961]/10' : 'bg-transparent py-6'}`}>
+      <div className="container mx-auto px-6 md:px-12 flex justify-between items-center relative">
+        <Link to="home" smooth duration={500} className="text-2xl font-bold cursor-pointer text-[#e8e8e8] whitespace-nowrap z-10">
           MK<span className="text-[#c9a961]">.❑</span>
         </Link>
 
-        <div className="hidden md:flex space-x-6 lg:space-x-8">
+        <div className="hidden md:flex space-x-6 lg:space-x-8 absolute left-1/2 transform -translate-x-1/2">
           {navItems.map((item) => (
             <Link
               key={item.name}
@@ -47,7 +47,7 @@ const Navbar = () => {
           ))}
         </div>
 
-        <div className="absolute right-0 md:hidden">
+        <div className="md:hidden z-10">
           <button onClick={() => setIsOpen(!isOpen)} className="text-[#e8e8e8] focus:outline-none">
             {isOpen ? <HiX size={28} /> : <HiMenu size={28} />}
           </button>

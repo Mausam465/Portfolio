@@ -24,6 +24,10 @@
 }
 
 @layer utilities {
+  .overflow-x-hidden-wrapper {
+    overflow-x: hidden;
+  }
+
   .glass {
     background-color: var(--color-glass);
     backdrop-filter: blur(16px);
