@@ -132,7 +132,7 @@ const Internship = () => {
   });
 
   // Smoother, longer wave
-  const wavyPath = "M 50 0 " + Array.from({ length: 20 }).map((_, i) => {
+  const wavyPath = "M 50 0 " + Array.from({ length: 10 }).map((_, i) => {
     const y = i * 200;
     return `Q 70 ${y + 50}, 50 ${y + 100} Q 30 ${y + 150}, 50 ${y + 200}`;
   }).join(' ');

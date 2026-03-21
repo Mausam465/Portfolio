@@ -268,7 +268,7 @@ const Card = ({ i, title, description, image, live, tech, progress, range, targe
             >
               {title}
             </h3>
-            <p className="text-[#7a7a8a] text-sm leading-relaxed flex-1">{description}</p>
+            <p className="text-[#7a7a8a] text-s leading-relaxed flex-1">{description}</p>
             <div className="mt-8">
               <a
                 href={live}
