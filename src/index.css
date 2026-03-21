@@ -55,3 +55,12 @@
   from, to { border-color: transparent }
   50% { border-color: var(--color-brand-primary) }
 }
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.preserve-3d {
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}

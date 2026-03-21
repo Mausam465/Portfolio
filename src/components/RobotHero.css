@@ -1,0 +1,262 @@
+﻿/* RobotHero.css - Scroll Interaction Version */
+
+/* Theme Variables */
+.robot-hero-container {
+  --bg: #1a1a1a;
+  --cyan: #c9a961; /* Gold Primary */
+  --lime: #e8e8e8; /* Text / White */
+  --pink: #9b8b7e; /* Secondary Brand */
+  --white: #e8e8e8;
+
+  background: var(--bg);
+  font-family: 'Space Mono', monospace;
+  color: var(--white);
+  /* The container is now the scroll track */
+  height: 250vh; 
+  position: relative;
+  z-index: 1;
+}
+
+/* The Fixed/Sticky Viewport */
+.hero-sticky {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  /* Center content structure mainly handled by absolute positioning now */
+}
+
+/* Custom Cursor */
+#cur {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background: var(--cyan);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 14px var(--cyan);
+  transition: opacity 0.3s;
+}
+
+#cur-ring {
+  position: fixed;
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid var(--cyan);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  opacity: .5;
+  transition: opacity 0.3s;
+}
+
+/* Scanlines & Grain */
+.scan {
+  position: fixed; /* Fixed to viewport */
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  background: repeating-linear-gradient(to bottom, transparent 0, transparent 3px, rgba(201, 169, 97, .05) 3px, rgba(201, 169, 97, .05) 4px);
+  width: 100%;
+  height: 100vh;
+}
+
+/* Background Grids (using pseudo-elements on sticky container) */
+.hero-sticky::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(201, 169, 97, .035) 1px, transparent 1px), linear-gradient(90deg, rgba(201, 169, 97, .035) 1px, transparent 1px);
+  background-size: 52px 52px;
+  animation: gd 28s linear infinite;
+  z-index: 0;
+}
+
+.hero-sticky::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 55% 50% at 50% 44%, rgba(201, 169, 97, .07) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes gd {
+  from { background-position: 0 0 }
+  to { background-position: 0 52px }
+}
+
+/* Blobs - relative to sticky container */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  pointer-events: none;
+  opacity: .1;
+  z-index: 0;
+}
+.b1 { width: 480px; height: 480px; background: var(--cyan); top: -10%; left: -10%; animation: bf 14s ease-in-out infinite alternate; }
+.b2 { width: 380px; height: 380px; background: var(--lime); bottom: -10%; right: -10%; animation: bf 18s 2s ease-in-out infinite alternate-reverse; }
+.b3 { width: 260px; height: 260px; background: var(--pink); top: 40%; left: 60%; animation: bf 10s 1s ease-in-out infinite alternate; }
+
+@keyframes bf {
+  from { transform: translate(0, 0) scale(1) }
+  to { transform: translate(25px, 25px) scale(1.08) }
+}
+
+/* Scene (Robot) */
+#scene {
+  width: 320px;
+  height: 460px;
+  position: absolute;
+  z-index: 5; /* Above background */
+  perspective: 700px;
+  
+  /* Initial Position: Centered and slightly lowered as requested */
+  left: 50%;
+  top: 60%; 
+  transform: translate(-50%, -50%);
+  
+  /* Transitions handled by React/JS for scroll, but add simple transition for smoothness where JS might be jittery */
+  will-change: left, transform;
+}
+
+#robot-wrap {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  animation: bob 3.8s ease-in-out infinite;
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0) }
+  50% { transform: translateY(-18px) }
+}
+
+#shadow {
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 160px;
+  height: 22px;
+  background: radial-gradient(ellipse, rgba(201, 169, 97, .32) 0%, transparent 70%);
+  filter: blur(8px);
+  animation: sp 3.8s ease-in-out infinite;
+}
+
+@keyframes sp {
+  0%, 100% { opacity: .8; transform: translateX(-50%) scaleX(1) }
+  50% { opacity: .25; transform: translateX(-50%) scaleX(.75) }
+}
+
+#robot-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Text Section - Initially Hidden/Offset */
+#text-section {
+  position: absolute;
+  right: 10%;
+  top: 55%; 
+  transform: translate(50px, -50%); /* Start slightly right */
+  width: 40%;
+  max-width: 600px;
+  opacity: 0;
+  z-index: 6;
+  text-align: left;
+  will-change: opacity, transform;
+}
+
+/* If screen is small, stack them instead (handled via media query usually, but for this specific scroll interaction we might need to disable it on mobile or adjust logic) */
+@media (max-width: 768px) {
+  .robot-hero-container {
+    height: auto; /* disable scroll jack on mobile */
+    min-height: 100vh;
+  }
+  .hero-sticky {
+    position: relative;
+    height: auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-top: 80px;
+    padding-bottom: 50px;
+  }
+  #scene {
+    position: relative;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    margin-bottom: 40px;
+  }
+  #text-section {
+    position: relative;
+    right: auto;
+    top: auto;
+    transform: none !important;
+    opacity: 1 !important;
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .scan { position: absolute; }
+}
+
+/* Animations from original file */
+.sparkle { animation: sk 2s ease-in-out infinite alternate; transform-origin: center; }
+@keyframes sk { from { opacity: .7; transform: scale(0.8); } to { opacity: 1; transform: scale(1.1); } }
+
+.blush { animation: bl 3s ease-in-out infinite; }
+@keyframes bl { 0%, 100% { opacity: .42 } 50% { opacity: .68 } }
+
+.ant-glow { animation: ag 1.2s ease-in-out infinite; }
+@keyframes ag { 0%, 100% { opacity: 1 } 50% { opacity: .25 } }
+
+.cline { animation: cl 2.4s ease-in-out infinite; }
+@keyframes cl { 0%, 100% { opacity: .9 } 50% { opacity: .18 } }
+
+.kbd-key { animation: kk 3s ease-in-out infinite alternate; }
+@keyframes kk { from { fill: rgba(201, 169, 97, .18) } to { fill: rgba(201, 169, 97, .52) } }
+
+.ear-l { animation: el 6s ease-in-out infinite; transform-origin: 86px 132px; }
+.ear-r { animation: el 6s .3s ease-in-out infinite; transform-origin: 234px 132px; }
+@keyframes el { 0%, 100% { transform: rotate(0deg) } 30% { transform: rotate(4deg) } 60% { transform: rotate(-4deg) } }
+
+/* Text Styles */
+.tag { font-family: 'Share Tech Mono', monospace; color: var(--cyan); margin-bottom: 10px; display: block; font-size: 14px; }
+.hero-heading { font-family: 'Orbitron', sans-serif; font-size: 3.5rem; line-height: 1.1; margin-bottom: 15px; color: var(--white); text-shadow: 0 0 10px rgba(201,169,97,0.3); }
+.hero-heading .hi { display: block; font-size: 1.5rem; font-weight: 400; color: #ccc; margin-bottom: 5px; }
+.hero-heading .nm { color: var(--cyan); }
+.role { font-size: 1.2rem; margin-bottom: 20px; color: #bbb; display: flex; align-items: center; gap: 10px; }
+.bio { font-size: 0.95rem; line-height: 1.6; color: #888; margin-bottom: 30px; max-width: 500px; }
+.ctas { display: flex; gap: 20px; }
+.btn-hero { padding: 12px 28px; border-radius: 4px; text-decoration: none; font-weight: 600; font-family: 'Rajdhani', sans-serif; letter-spacing: 1px; transition: all 0.3s; position: relative; overflow: hidden; }
+.bp { background: var(--cyan); color: #000; border: 1px solid var(--cyan); }
+.bp:hover { background: transparent; color: var(--cyan); box-shadow: 0 0 15px rgba(201,169,97,0.4); }
+.bo { background: transparent; color: var(--cyan); border: 1px solid var(--cyan); }
+.bo:hover { background: rgba(201,169,97,0.1); color: #fff; border-color: #fff; }
+
+/* Scroll hint */
+.sh {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+}
+.sa { width: 20px; height: 32px; border: 2px solid var(--cyan); border-radius: 12px; position: relative; }
+.sa::before { content: ''; position: absolute; top: 6px; left: 50%; transform: translateX(-50%); width: 2px; height: 6px; background: var(--cyan); border-radius: 2px; animation: sc 1.5s infinite; }
+@keyframes sc { 0% { top: 6px; opacity: 1; } 100% { top: 18px; opacity: 0; } }
+
