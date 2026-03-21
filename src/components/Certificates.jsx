@@ -59,19 +59,49 @@ const certificates = [
   },
 ];
 
-const Card = ({ cert, index, total, baseAngle, rotation, radius }) => {
-  const angle = baseAngle * index;
-  const transform = useTransform(radius, (r) => `rotateY(${angle}deg) translateZ(${r}px)`);
-  
+const Card = ({ cert, index, total, baseAngle, radius, spread }) => {
+  const transform = useTransform([radius, spread], ([r, s]) => {
+      // Circle State (s=1)
+      const circleAngle = baseAngle * index;
+      
+      // Stack State (s=0) - "Messy Pile" Look
+      // We want them to look like a scattered deck of polaroids.
+      // Use deterministic math for "random" angles so it persists across renders.
+      const randomRot = index === 0 ? -2 : ((index * 137.5) % 30) - 15; // Random angle between -15 and 15
+      const randomX = index === 0 ? 0 : ((index * 45) % 20) - 10; // Slight X offset
+      const randomY = index === 0 ? 0 : ((index * 67) % 20) - 10; // Slight Y offset
+      
+      // Stack Depth: Ensure top card (index 0) is closest to camera
+      const stackedZ = (total - index) * 5;
+
+      // Interpolate
+      const currentRotateY = circleAngle * s; 
+      const currentRotateZ = randomRot * (1 - s);
+      const currentTranslateX = randomX * (1 - s);
+      const currentTranslateY = randomY * (1 - s);
+      
+      // We blend the Z translation. 
+      // In stack mode: stackedZ
+      // In circle mode: radius (r)
+      const currentTranslateZ = stackedZ * (1 - s) + r * s;
+      
+      // Scaling:
+      // Initial Stack (s=0): 1.4 (Much larger to see details)
+      // Moving Ring (s=1): 1.0 (Standard size)
+      const currentScale = 1.4 - (0.4 * s);
+
+      return `rotateY(${currentRotateY}deg) rotateZ(${currentRotateZ}deg) translate3d(${currentTranslateX}px, ${currentTranslateY}px, ${currentTranslateZ}px) scale(${currentScale})`;
+  });
+
   const isPdf = cert.image.toLowerCase().endsWith(".pdf");
 
   return (
     <motion.div
       style={{ transform, transformStyle: "preserve-3d" }}
       onClick={() => window.open(cert.link, "_blank")}
-      className="absolute left-0 top-0 w-[220px] h-[300px] bg-[#1e1e1e]/90 backdrop-blur-md border border-[#c9a961]/20 rounded-xl overflow-hidden shadow-2xl cursor-pointer backface-visible"
+      className="absolute left-0 top-0 w-[180px] h-[260px] bg-[#1e1e1e]/90 backdrop-blur-md border border-[#c9a961]/20 rounded-xl overflow-hidden shadow-2xl cursor-pointer backface-visible"
     >
-      <div className="relative h-[180px] overflow-hidden bg-[#2a2a2a] flex items-center justify-center">
+      <div className="relative h-[160px] overflow-hidden bg-[#2a2a2a] flex items-center justify-center">
         {isPdf ? (
             <div className="text-center p-4 flex flex-col items-center">
                 <FiFileText className="text-[#c9a961] text-5xl mb-2" />
@@ -84,10 +114,10 @@ const Card = ({ cert, index, total, baseAngle, rotation, radius }) => {
              <FiExternalLink className="text-[#c9a961] text-3xl" />
         </div>
       </div>
-      <div className="p-4 flex flex-col justify-between h-[120px] bg-[#1e1e1e]">
+      <div className="p-4 flex flex-col justify-between h-[100px] bg-[#1e1e1e]">
         <div>
-            <h3 className="text-[#e8e8e8] font-bold text-lg leading-tight mb-2 line-clamp-2">{cert.title}</h3>
-            <p className="text-[#c9a961] text-xs font-medium uppercase tracking-wider">{cert.issuer}</p>
+            <h3 className="text-[#e8e8e8] font-bold text-base leading-tight mb-2 line-clamp-2">{cert.title}</h3>
+            <p className="text-[#c9a961] text-[10px] font-medium uppercase tracking-wider">{cert.issuer}</p>
         </div>
         <div className="w-full h-1 bg-[#c9a961]/20 rounded-full mt-2">
             <div className="w-1/2 h-full bg-[#c9a961] rounded-full"></div>
@@ -110,8 +140,12 @@ const Certificates = () => {
     restDelta: 0.001
   });
 
-  const radius = useTransform(smoothProgress, [0, 0.3], [0, 500]);
-  const rotateY = useTransform(smoothProgress, [0, 1], [0, -360]);
+  // Animation values:
+  // 0 -> 0.2: Transition from Stack (0) to Ring (650)
+  // 0.2 -> 1: Rotate the ring
+  const radius = useTransform(smoothProgress, [0, 0.2], [0, 500]);
+  const spread = useTransform(smoothProgress, [0, 0.2], [0, 1]);
+  const rotateY = useTransform(smoothProgress, [0, 0.2, 1], [0, 0, -360]);
 
   return (
     <section 
@@ -122,8 +156,8 @@ const Certificates = () => {
       <div className="sticky top-0 h-screen flex flex-col items-center justify-center perspective-1000 overflow-hidden">
         
         <motion.div 
-            style={{ opacity: useTransform(scrollYProgress, [0, 0.2], [1, 0]) }}
-            className="absolute top-20 text-center z-20 pointer-events-none"
+            style={{ opacity: useTransform(scrollYProgress, [0, 0.1], [1, 0]) }}
+            className="absolute top-10 md:top-16 text-center z-20 pointer-events-none"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-4 text-[#e8e8e8]">
             My <span className="text-[#c9a961]">Certificates</span>
@@ -131,13 +165,14 @@ const Certificates = () => {
           <div className="w-24 h-1 bg-[#c9a961] mx-auto rounded-full shadow-[0_0_10px_rgba(201,169,97,0.3)]"></div>
         </motion.div>
 
-        <div className="relative w-full flex items-center justify-center" style={{ perspective: "1000px" }}>
+        {/* Mobile Heading */}
+        <div className="relative w-full flex items-center justify-center mt-24 md:mt-32" style={{ perspective: "1000px" }}>
             <motion.div 
-                style={{ 
+                style={{  
                     rotateY: rotateY,
                     transformStyle: "preserve-3d",
                 }}
-                className="relative w-[220px] h-[300px] flex items-center justify-center"
+                className="relative w-[180px] h-[260px] flex items-center justify-center"
             >
             {certificates.map((cert, index) => (
                 <Card
@@ -148,6 +183,7 @@ const Certificates = () => {
                     baseAngle={360 / certificates.length}
                     radius={radius}
                     rotation={rotateY}
+                    spread={spread}
                 />
             ))}
             </motion.div>

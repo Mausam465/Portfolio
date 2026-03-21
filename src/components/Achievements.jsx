@@ -25,16 +25,20 @@ const achievements = [
   },
 ];
 
-const PageContentLeft = ({ item, pageNum }) => (
-  <div className="w-full h-full flex flex-col items-center justify-center p-8 bg-[#242424] border-r border-[#333] relative overflow-hidden backface-hidden">
+const PageContentLeft = ({ item, pageNum, isBackFace = false }) => (
+  <div className={`w-full h-full flex flex-col items-center justify-center p-8 bg-[#242424] relative overflow-hidden backface-hidden ${isBackFace ? 'border-l border-[#333]' : 'border-r border-[#333]'}`}>
     {/* Texture & Page Number */}
-    <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/20 pointer-events-none" />
-    <div className="absolute top-6 left-6 text-[#444] font-serif italic opacity-30 text-sm">Page {pageNum}</div>
+    {/* Shadow Gradient: Approaches Spine */}
+    <div className={`absolute inset-0 pointer-events-none ${isBackFace ? 'bg-gradient-to-r from-black/30 to-transparent' : 'bg-gradient-to-l from-black/30 to-transparent'}`} />
     
-    <div className="transform transition-all duration-500 hover:scale-110">
+    <div className={`absolute top-6 text-[#444] font-serif italic opacity-30 text-sm ${isBackFace ? 'right-6' : 'left-6'}`}>
+        Page {pageNum}
+    </div>
+    
+    <div className="transform transition-all duration-500 hover:scale-110 relative z-10">
         {item.icon}
     </div>
-    <h3 className="text-xl md:text-3xl font-bold text-[#e8e8e8] mt-4 font-serif text-center">
+    <h3 className="text-xl md:text-3xl font-bold text-[#e8e8e8] mt-4 font-serif text-center relative z-10">
         {item.title}
     </h3>
   </div>
@@ -43,7 +47,8 @@ const PageContentLeft = ({ item, pageNum }) => (
 const PageContentRight = ({ item, pageNum }) => (
   <div className="w-full h-full flex flex-col items-start justify-center p-8 bg-[#2a2a2a] relative overflow-hidden backface-hidden">
     {/* Texture & Page Number */}
-    <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black/20 pointer-events-none" />
+    {/* Shadow Gradient: Approaches Spine (Left edge) */}
+    <div className="absolute inset-0 bg-gradient-to-r from-black/30 to-transparent pointer-events-none" />
     <div className="absolute top-6 right-6 text-[#444] font-serif italic opacity-30 text-sm">Page {pageNum}</div>
     
     <div className="prose prose-invert relative z-10 w-full">
@@ -122,7 +127,7 @@ const Achievements = () => {
             
             {/* STATIC LEFT BASE: Item 0 Left */}
             <div className="absolute left-0 top-0 w-1/2 h-full z-0">
-                <PageContentLeft item={achievements[0]} pageNum={1} />
+                <PageContentLeft item={achievements[0]} pageNum={1} isBackFace={false} />
             </div>
 
             {/* STATIC RIGHT BASE: Last Item Right */}
@@ -148,28 +153,40 @@ const Achievements = () => {
                     <motion.div
                         key={i}
                         className="absolute right-0 top-0 w-1/2 h-full origin-left preserve-3d"
-                        initial={{ rotateY: 0 }}
-                        animate={{ rotateY: isFlipped ? -180 : 0 }}
-                        transition={{ duration: 0.8, type: "spring", stiffness: 60, damping: 12 }}
-                        style={{ 
-                            // Z-Index is tricky.
-                            // When on Right (not flipped): Lower 'i' should be on TOP. (0 is top).
-                            // When on Left (flipped): Higher 'i' should be on TOP. 
+                        style={{ willChange: "transform" }}
+                        initial={{ rotateY: 0, zIndex: totalItems - i }}
+                        animate={{ 
+                            rotateY: isFlipped ? -180 : 0,
                             zIndex: isFlipped ? i + 1 : totalItems - i 
+                        }}
+                        transition={{ 
+                            rotateY: { duration: 0.6, ease: [0.645, 0.045, 0.355, 1.0] }, // cubic-bezier for "heavy page" feel
+                            zIndex: { delay: isFlipped ? 0.3 : 0 } // Delay z-Index change so it stays on top while moving to left
                         }}
                     >
                         {/* FRONT FACE (Item i Right) */}
-                        <div className="absolute inset-0 w-full h-full backface-hidden" style={{ transform: "rotateY(0deg)", backfaceVisibility: "hidden" }}>
+                        <div className="absolute inset-0 w-full h-full backface-hidden" style={{ transform: "rotateY(0deg) translateZ(1px)", backfaceVisibility: "hidden" }}>
                             <PageContentRight item={achievements[i]} pageNum={2 * i + 2} />
                             {/* Inner Shadow for spine */}
                             <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-black/20 to-transparent pointer-events-none" />
+                            {/* Dynamic Lighting Overlay */}
+                             <motion.div 
+                                className="absolute inset-0 bg-black pointer-events-none"
+                                animate={{ opacity: isFlipped ? 0.5 : 0 }}
+                                transition={{ duration: 0.4 }}
+                            />
                         </div>
 
                         {/* BACK FACE (Item i+1 Left) */}
-                        <div className="absolute inset-0 w-full h-full backface-hidden" style={{ transform: "rotateY(180deg)", backfaceVisibility: "hidden" }}>
-                            <PageContentLeft item={achievements[i + 1]} pageNum={2 * (i + 1) + 1} />
-                            {/* Inner Shadow for spine */}
-                            <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-black/20 to-transparent pointer-events-none" />
+                        <div className="absolute inset-0 w-full h-full backface-hidden" style={{ transform: "rotateY(180deg) translateZ(1px)", backfaceVisibility: "hidden" }}>
+                            <PageContentLeft item={achievements[i + 1]} pageNum={2 * (i + 1) + 1} isBackFace={true} />
+                            {/* Inner Shadow for spine (Now handled by component prop logic mostly, but we can add overlay if needed) */}
+                             {/* Dynamic Lighting Overlay */}
+                            <motion.div 
+                                className="absolute inset-0 bg-black pointer-events-none"
+                                animate={{ opacity: isFlipped ? 0 : 0.5 }}
+                                transition={{ duration: 0.4 }}
+                            />
                         </div>
                     </motion.div>
                 );

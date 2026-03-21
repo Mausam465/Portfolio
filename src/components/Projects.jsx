@@ -1,96 +1,130 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 
 const projects = [
   {
-    title: 'E-Commerce Platform',
-    description: 'A full-stack e-commerce solution with dynamic routing, payment gateway integration, and a modern admin dashboard.',
-    image: 'https://via.placeholder.com/600x400/1e293b/38bdf8?text=E-Commerce',
-    tech: ['React', 'Node.js', 'MongoDB', 'Stripe'],
+    title: 'AT Production – Azure-Deployed Full-Stack CMS Platform',
+    description: 'A production-ready full-stack CMS platform designed to manage dynamic content, blogs, and user interactions with high performance and scalability. Features secure authentication, role-based access, and a responsive UI with seamless deployment on Azure.',
+    image: 'https://ik.imagekit.io/vzxwc5boa/Screenshot%202026-03-21%20183026.png',
+    tech: ['React', 'Node.js', 'MongoDB', 'Express', 'Azure','JWT Auth'],
     github: '#',
-    live: '#',
+    live: 'https://www.atproduction.net/',
+    color: '#242424'
   },
   {
-    title: 'AI Productivity Tool',
-    description: 'A conceptual AI-driven tool that helps developers manage their tasks, featuring semantic search and automated tagging based on GPT.',
-    image: 'https://via.placeholder.com/600x400/1e293b/0ea5e9?text=AI+Tool',
-    tech: ['Next.js', 'Tailwind', 'OpenAI API', 'Supabase'],
+    title: 'AT Production – CRM & Workforce Management Platform',
+    description: 'A scalable CRM and workforce management system with real-time data handling, secure authentication, and Azure deployment for managing customers, employees, and operations.',
+    image: 'https://ik.imagekit.io/vzxwc5boa/Screenshot%202026-03-21%20183048.png',
+    tech: ['React', 'Node.js', 'MongoDB', 'Express', 'Azure','JWT Auth'],
     github: '#',
-    live: '#',
+    live: 'https://crm.atproduction.net/dashboard',
+    color: '#2a2a2a'
   },
   {
-    title: 'Crypto Tracker Dashboard',
-    description: 'Real-time cryptocurrency tracking dashboard visualizing market trends utilizing WebSockets and advanced charting libraries.',
-    image: 'https://via.placeholder.com/600x400/1e293b/38bdf8?text=Crypto+Tracker',
-    tech: ['Vue.js', 'Chart.js', 'Firebase', 'WebSockets'],
+    title: 'LearnComet Edu Platform',
+    description: 'Built responsive and animated UI components for an EdTech mentorship platform using Next.js and Tailwind, enhancing user engagement and performance. Ensured clean, scalable component architecture for maintainability and faster development.',
+    image: 'https://ik.imagekit.io/vzxwc5boa/Screenshot%202026-03-21%20184759.png',
+    tech: ['Next.js', 'React', 'Tailwind CSS', 'JavaScript','Responsive Design'],
     github: '#',
-    live: '#',
+    live: 'https://www.learncometedu.com/',
+    color: '#202020'
   },
 ];
 
-const Projects = () => {
+const Card = ({ i, title, description, src, image, url, github, live, tech, color, progress, range, targetScale }) => {
+  const container = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: container,
+    offset: ['start end', 'start start']
+  })
+
+  const imageScale = useTransform(scrollYProgress, [0, 1], [1.2, 1])
+  const scale = useTransform(progress, range, [1, targetScale]);
+  
   return (
-    <section id="projects" className="py-24 relative z-10">
-      <div className="container mx-auto px-6 md:px-12">
-        <div className="text-center mb-16">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-bold mb-4 text-[#e8e8e8]"
-          >
-            Featured <span className="text-gradient">Projects</span>
-          </motion.h2>
-          <div className="w-24 h-1 bg-[#c9a961] mx-auto rounded-full shadow-[0_0_10px_rgba(201,169,97,0.3)]"></div>
-        </div>
+    <div ref={container} className="h-screen flex items-top justify-center sticky top-0 md:top-12">
+      <motion.div 
+        style={{ scale, top: `calc(-5vh + ${i * 25}px)` }} 
+        className="flex flex-col relative h-auto md:h-[500px] w-full max-w-[1000px] rounded-3xl p-8 md:p-12 border border-[#c9a961] overflow-hidden shadow-2xl origin-top bg-[#1f1f1f]"
+      >
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
-              className="glass rounded-2xl overflow-hidden flex flex-col h-full group border border-[#c9a961]/10 hover:border-[#c9a961]/30 transition-all duration-300"
-            >
-              <div className="relative h-48 sm:h-56 overflow-hidden">
-                <img 
-                  src={project.image} 
-                  alt={project.title} 
-                  className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100"
-                />
-                <div className="absolute inset-0 bg-[#1a1a1a]/30 group-hover:bg-transparent transition-colors duration-300"></div>
-              </div>
-              
-              <div className="p-6 flex flex-col flex-grow bg-[#242424]/50 backdrop-blur-sm">
-                <h3 className="text-2xl font-bold mb-3 text-[#e8e8e8] group-hover:text-[#c9a961] transition-colors">{project.title}</h3>
-                <p className="text-[#a8a8b8] text-sm mb-6 flex-grow">{project.description}</p>
-                
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {project.tech.map((t, i) => (
-                    <span key={i} className="text-xs px-3 py-1 bg-[#1a1a1a] text-[#c9a961] font-medium rounded-full border border-[#c9a961]/10">
-                      {t}
-                    </span>
-                  ))}
+        <div className="flex flex-col md:flex-row h-full gap-8 md:gap-12 relative z-10">
+            
+            {/* Project Info */}
+            <div className="w-full md:w-[45%] flex flex-col justify-between">
+                <div>
+                    <h3 className="text-3xl font-bold text-[#e8e8e8] mb-4 font-serif">{title}</h3>
+                    <p className="text-[#a8a8b8] text-base leading-relaxed mb-6">
+                        {description}
+                    </p>
+                    
+                    <div className="flex flex-wrap gap-2 mb-8">
+                        {tech.map((t, idx) => (
+                             <span key={idx} className="text-xs px-3 py-1 bg-[#151515] text-[#c9a961] font-medium rounded-full border border-[#c9a961]/20">
+                                {t}
+                             </span>
+                        ))}
+                    </div>
                 </div>
-                
-                <div className="flex gap-4 mt-auto">
-                  <a href={project.github} className="flex-1 flex items-center justify-center gap-2 py-2 rounded-lg bg-[#242424] hover:bg-[#2a2a2a] text-[#e8e8e8] text-sm font-semibold transition-all shadow-sm border border-[#c9a961]/10">
-                    <FaGithub /> Source
-                  </a>
-                  <a href={project.live} className="flex-1 flex items-center justify-center gap-2 py-2 rounded-lg bg-gradient-to-r from-[#9b8b7e] to-[#c9a961] hover:opacity-90 text-[#0f0f1e] text-sm font-semibold transition-opacity shadow-[0_4px_15px_rgba(201,169,97,0.3)] hover:shadow-[0_4px_25px_rgba(201,169,97,0.5)]">
-                    <FaExternalLinkAlt className="text-xs" /> Demo
+
+                <div className="flex justify-center gap-4">
+                  <a href={live} className="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-lg bg-[#c9a961] hover:bg-[#b09252] text-[#1a1a1a] text-sm font-bold transition-all shadow-[0_4px_15px_rgba(201,169,97,0.3)] hover:shadow-[0_4px_25px_rgba(201,169,97,0.5)]">
+                    <FaExternalLinkAlt className="text-sm" /> Live Demo
                   </a>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+            </div>
+
+            {/* Project Image */}
+            <div className="w-full md:w-[55%] md:self-center relative h-[250px] md:h-auto rounded-2xl overflow-hidden border border-[#c9a961]/10 shadow-lg">
+                <motion.div 
+                    className="w-full"
+                    style={{ scale: imageScale }}
+                >
+                    <img 
+                        src={image} 
+                        alt="project"
+                        className="w-full h-auto object-cover"
+                    />
+                </motion.div>
+            </div>
+
         </div>
+      </motion.div>
+    </div>
+  )
+}
+
+const Projects = () => {
+  const container = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: container,
+    offset: ['start start', 'end end']
+  })
+
+  return (
+    <section ref={container} className="relative z-10 bg-[#111]"> 
+      {/* Header Section (Not sticky, scrolls away) */}
+      <div className="pt-24 pb-12 px-6">
+           <div className="text-center mb-16">
+            <motion.h2 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="text-4xl md:text-5xl font-bold mb-4 text-[#e8e8e8]"
+            >
+                Featured <span className="text-gradient">Projects</span>
+            </motion.h2>
+            <div className="w-24 h-1 bg-[#c9a961] mx-auto rounded-full shadow-[0_0_10px_rgba(201,169,97,0.3)]"></div>
+           </div>
       </div>
+
+      {projects.map( (project, i) => {
+        const targetScale = 1 - ( (projects.length - i) * 0.05);
+        return <Card key={i} i={i} {...project} progress={scrollYProgress} range={[i * .25, 1]} targetScale={targetScale}/>
+      })}
     </section>
-  );
-};
+  )
+}
 
 export default Projects;

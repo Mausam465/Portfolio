@@ -1,155 +1,178 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import Skills3D from './Skills3D';
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
-const skillCategories = [
-  {
-    title: 'Frontend',
-    skills: ['HTML/CSS', 'JavaScript', 'React.js', 'Tailwind CSS'],
-  },
-  {
-    title: 'Backend',
-    skills: ['Node.js', 'Express.js', 'MongoDB', 'SQL'],
-  },
-  {
-    title: 'Tools & Other',
-    skills: ['Git & GitHub', 'Figma', 'Vite', 'Three.js'],
-  },
+const skills = [
+  // Core / Inner Circle (6 items)
+  { name: 'HTML/CSS', category: 'Frontend' },
+  { name: 'JavaScript', category: 'Language' },
+  { name: 'React', category: 'Frontend' },
+  { name: 'Node.js', category: 'Backend' },
+  { name: 'Tailwind', category: 'Frontend' },
+  { name: 'MongoDB', category: 'Database' },
+  
+  // Outer Circle (10 items)
+  { name: 'Next.js', category: 'Frontend' },
+  { name: 'TypeScript', category: 'Language' },
+  { name: 'SQL', category: 'Database' },
+  { name: 'Express', category: 'Backend' },
+  { name: 'Git/GitHub', category: 'Tools' },
+  { name: 'Figma', category: 'Design' },
+  { name: 'Three.js', category: 'Library' },
+  { name: 'Vite', category: 'Tools' },
+  { name: 'Python', category: 'Language' },
+  { name: 'Redux', category: 'State' },
 ];
 
-const SkillCard = ({ category, index }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 50 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: '-50px' }}
-    transition={{ duration: 0.5, delay: index * 0.2 }}
-    whileHover={{ y: -10, scale: 1.02 }}
-    className="glass p-8 rounded-2xl relative overflow-hidden group border border-[#c9a961]/10 hover:border-[#c9a961]/30 transition-all duration-300"
-  >
-    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#c9a961]/10 to-[#9b8b7e]/5 rounded-bl-[100px] -z-10 group-hover:scale-110 transition-transform duration-500"></div>
-    <h3 className="text-2xl font-bold mb-6 text-gradient">{category.title}</h3>
-    <div className="flex flex-wrap gap-3">
-      {category.skills.map((skill, idx) => (
-        <motion.div
-          key={idx}
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.3, delay: idx * 0.1 }}
-          className="px-4 py-2 bg-gradient-to-r from-[#9b8b7e]/20 to-[#c9a961]/20 border border-[#c9a961]/40 rounded-lg text-[#b8b8c8] font-medium hover:bg-gradient-to-r hover:from-[#9b8b7e]/30 hover:to-[#c9a961]/30 hover:border-[#c9a961]/60 transition-all duration-300 cursor-default"
-        >
-          {skill}
-        </motion.div>
-      ))}
-    </div>
-  </motion.div>
+const Hexagon = ({ size = "w-32 h-36", color = "#c9a961", children, className = "" }) => (
+  <div className={`relative flex items-center justify-center ${size} ${className}`}
+       style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
+       
+       {/* Background */}
+       <div className="absolute inset-[1px] bg-[#1a1a1a] flex flex-col items-center justify-center z-10" 
+            style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
+           {children}
+       </div>
+       
+       {/* Border Gradient */}
+       <div className="absolute inset-0 z-0 bg-gradient-to-br from-[#c9a961] to-[#9b8b7e] opacity-50" />
+  </div>
 );
 
-const Skills3DCarousel = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
+const ConnectionLine = ({ x2, y2, scrollYProgress }) => {
+    // Determine drawing progress
+    const draw = useTransform(scrollYProgress, [0, 1], [0, 1]);
+    
+    return (
+        <svg className="absolute top-1/2 left-1/2 w-[800px] h-[800px] -translate-x-1/2 -translate-y-1/2 pointer-events-none overflow-visible">
+             <motion.line 
+                x1="400" y1="400"
+                x2={400 + x2}
+                y2={400 + y2}
+                stroke="#c9a961" 
+                strokeWidth="2" 
+                strokeDasharray="6 6"
+                strokeOpacity="0.3"
+                initial={{ pathLength: 0 }}
+                style={{ pathLength: draw }}
+            />
+        </svg>
+    )
+}
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % skillCategories.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
 
-  return (
-    <div className="relative w-full max-w-5xl mx-auto">
-      {/* 3D Carousel Container */}
-      <div className="relative h-96 flex items-center justify-center" style={{ perspective: '1200px' }}>
-        {skillCategories.map((category, idx) => {
-          const distance = (idx - activeIndex + skillCategories.length) % skillCategories.length;
-          let rotateY = 0;
-          let translateX = 0;
-          let opacity = 0.3;
-          let scale = 0.8;
-          let zIndex = 0;
+const SkillNode = ({ skill, index, total, layer, scrollYProgress }) => {
+    const isInner = layer === 'inner';
+    const radius = isInner ? 160 : 280; // Radius in pixels
+    const itemsInLayer = isInner ? 6 : 10;
+    const angleOffset = isInner ? 30 : 15; // Offset to stagger
+    const angleDeg = (index * (360 / itemsInLayer)) + angleOffset;
+    const angleRad = angleDeg * (Math.PI / 180);
 
-          if (distance === 0) {
-            // Center - Front card
-            rotateY = 0;
-            translateX = 0;
-            opacity = 1;
-            scale = 1;
-            zIndex = 10;
-          } else if (distance === 1) {
-            // Right - Coming from right
-            rotateY = -35;
-            translateX = 380;
-            opacity = 0.7;
-            scale = 0.85;
-            zIndex = 5;
-          } else {
-            // Left - Going to left
-            rotateY = 35;
-            translateX = -380;
-            opacity = 0.7;
-            scale = 0.85;
-            zIndex = 5;
-          }
+    const x = Math.cos(angleRad) * radius;
+    const y = Math.sin(angleRad) * radius;
 
-          return (
+    // Movement
+    const xPos = useTransform(scrollYProgress, [0, 1], [0, x]);
+    const yPos = useTransform(scrollYProgress, [0, 1], [0, y]);
+    
+    // Scale / Opacity
+    const scale = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
+    const opacity = useTransform(scrollYProgress, [0, 0.2], [0, 1]);
+
+    return (
+        <>
+            {/* Line starts from center (0,0 relative) to node position */}
+            {/* We pass the FINAL x/y to the line component to handle drawing */}
+            <ConnectionLine x2={x} y2={y} scrollYProgress={scrollYProgress} />
+
             <motion.div
-              key={idx}
-              className="absolute w-96"
-              initial={false}
-              animate={{
-                rotateY,
-                x: translateX,
-                opacity,
-                scale,
-              }}
-              transition={{ duration: 0.5, ease: 'easeInOut' }}
-              style={{
-                transformStyle: 'preserve-3d',
-                zIndex,
-              }}
+                style={{ x: xPos, y: yPos, scale, opacity }}
+                className="absolute flex items-center justify-center z-10"
             >
-              <SkillCard category={category} index={idx} />
+                <Hexagon size={isInner ? "w-24 h-28 md:w-28 md:h-32" : "w-20 h-24 md:w-24 md:h-28"}>
+                    <div className="text-center p-1">
+                        <span className={`block font-bold ${isInner ? "text-xs md:text-sm text-[#e8e8e8]" : "text-[10px] md:text-xs text-gray-300"}`}>
+                            {skill.name}
+                        </span>
+                        <span className="block text-[8px] text-[#c9a961] uppercase tracking-widest mt-0.5">
+                            {skill.category}
+                        </span>
+                    </div>
+                </Hexagon>
             </motion.div>
-          );
-        })}
-      </div>
-
-      {/* Navigation Dots */}
-      <div className="flex justify-center gap-3 mt-2">
-        {skillCategories.map((_, idx) => (
-          <button
-            key={idx}
-            onClick={() => setActiveIndex(idx)}
-            className={`w-3 h-3 rounded-full transition-all ${
-              idx === activeIndex ? 'bg-[#c9a961] w-8' : 'bg-[#c9a961]/40'
-            }`}
-          />
-        ))}
-      </div>
-    </div>
-  );
+        </>
+    );
 };
 
-const Skills = () => (
-  <section id="skills" className="py-24 relative z-10">
-    <div className="container mx-auto px-6 md:px-12">
-      <div className="text-center mb-16">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-4xl md:text-5xl font-bold mb-4 text-[#e8e8e8]"
-        >
-          My <span className="text-gradient">Skills</span>
-        </motion.h2>
-        <div className="w-24 h-1 bg-[#c9a961] mx-auto rounded-full shadow-[0_0_10px_rgba(201,169,97,0.3)]"></div>
-      </div>
+const Skills = () => {
+    const containerRef = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start start", "end end"]
+    });
 
-      {/* 3D Skills Carousel */}
-      <div className="flex justify-center items-center pb-20 mt-8">
-        <Skills3DCarousel />
-      </div>
-    </div>
-  </section>
-);
+    const innerSkills = skills.slice(0, 6);
+    const outerSkills = skills.slice(6, 16);
+
+    const headingOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
+
+    return (
+        <section ref={containerRef} className="relative h-[300vh] bg-[#1a1a1a]">
+            <div className="sticky top-0 w-full h-screen flex items-center justify-center overflow-hidden perspective-1000">
+                
+                {/* Dark Radial Background */}
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#2a2a2a_0%,_#111_100%)] -z-20" />
+                
+                {/* Central "Mind Map" Core */}
+                <motion.div 
+                    style={{ scale: useTransform(scrollYProgress, [0, 0.3], [1.3, 1]) }}
+                    className="relative z-20 flex flex-col items-center justify-center"
+                >
+                    <motion.h2 
+                        style={{ opacity: headingOpacity }}
+                        className="absolute -top-16 md:-top-20 text-3xl md:text-5xl font-bold text-[#e8e8e8] tracking-widest uppercase font-serif"
+                    >
+                        Skills
+                    </motion.h2>
+                    <div className="w-32 h-32 md:w-48 md:h-48 bg-[#212121] rounded-3xl border-4 border-[#c9a961] shadow-[0_0_60px_rgba(201,169,97,0.15)] flex flex-col items-center justify-center text-center p-4 relative">
+                        {/* Connecting knobs visual */}
+                        <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-[#c9a961] rounded-full" />
+                        <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-[#c9a961] rounded-full" />
+                        <div className="absolute -left-2 top-1/2 -translate-y-1/2 w-4 h-4 bg-[#c9a961] rounded-full" />
+                        <div className="absolute -right-2 top-1/2 -translate-y-1/2 w-4 h-4 bg-[#c9a961] rounded-full" />
+                        
+                        <h2 className="text-xl md:text-3xl font-bold text-[#e8e8e8] font-serif">
+                            Technology<br /><span className="text-[#c9a961]">Stack</span>
+                        </h2>
+                        <div className="w-8 h-1 bg-[#c9a961]/50 rounded-full mt-2" />
+                    </div>
+                </motion.div>
+
+                {/* Nodes Container */}
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                     {innerSkills.map((skill, index) => (
+                        <SkillNode 
+                            key={`inner-${index}`} 
+                            skill={skill} 
+                            index={index} 
+                            layer="inner"
+                            scrollYProgress={scrollYProgress}
+                        />
+                     ))}
+                     {outerSkills.map((skill, index) => (
+                        <SkillNode 
+                            key={`outer-${index}`} 
+                            skill={skill} 
+                            index={index} 
+                            layer="outer"
+                            scrollYProgress={scrollYProgress}
+                        />
+                     ))}
+                </div>
+
+            </div>
+        </section>
+    );
+};
 
 export default Skills;
