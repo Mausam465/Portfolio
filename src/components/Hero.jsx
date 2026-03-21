@@ -258,7 +258,7 @@ const Hero = () => {
       <div className="scan"></div>
 
       {/* Main Track Container for Sticky Scroll */}
-      <section className="robot-hero-container" id="hero" ref={containerRef}>
+      <section className="robot-hero-container" id="home" ref={containerRef}>
         
         {/* Sticky Viewport */}
         <div className="hero-sticky">

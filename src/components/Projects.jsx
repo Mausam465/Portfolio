@@ -316,8 +316,7 @@ const Projects = () => {
   });
 
   return (
-    <section ref={container} className="relative z-10 bg-[#111]">
-      <div className="pt-24 pb-8 px-6 text-center">
+    <section id="projects" ref={container} className="relative z-10 bg-[#111]">      <div className="pt-24 pb-8 px-6 text-center">
         <motion.h2
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
