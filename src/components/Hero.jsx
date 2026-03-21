@@ -6,6 +6,7 @@ const Hero = () => {
   const containerRef = useRef(null);
   const sceneRef = useRef(null);
   const textRef = useRef(null);
+  const profileImageRef = useRef(null);
   
   // Robot Parts Refs
   const cursorRef = useRef(null);
@@ -220,6 +221,18 @@ const Hero = () => {
           
           // Update the target, the loop handles smoothing
           scrollTarget.current = Math.max(0, Math.min(progress, 1));
+          
+          // Handle robot fade out and image/text fade in
+          if (sceneRef.current) {
+            sceneRef.current.style.opacity = Math.max(0, 1 - progress * 2);
+          }
+          if (profileImageRef.current) {
+            profileImageRef.current.style.opacity = Math.min(1, progress * 2);
+          }
+          if (textRef.current) {
+            textRef.current.style.opacity = Math.min(1, progress * 1.5);
+            textRef.current.style.transform = `translate(${Math.max(0, (1 - progress) * 50)}px, -50%)`;
+          }
       } else {
         // Reset if mobile
         scrollTarget.current = 0;
@@ -424,6 +437,19 @@ const Hero = () => {
                 </g>
                 </svg>
             </div>
+            </div>
+
+            {/* PROFILE IMAGE - Revealed on scroll */}
+            <div id="profile-image" ref={profileImageRef}>
+              <img 
+                src="https://ik.imagekit.io/vzxwc5boa/WhatsApp%20Image%202026-03-21%20at%207.05.43%20PM%20(1).jpeg?updatedAt=1774110376513" 
+                alt="Mausam Kumari" 
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover'
+                }}
+              />
             </div>
 
             {/* TEXT SECTION (Initially hidden, revealed on scroll) */}
