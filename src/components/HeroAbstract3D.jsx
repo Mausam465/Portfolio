@@ -114,7 +114,7 @@ const BackgroundGrid = () => {
 const HeroAbstract3D = () => {
   return (
     <div className="w-full h-full">
-      <Canvas camera={{ position: [8, 8, 8], fov: 50 }}>
+      <Canvas camera={{ position: [8, 10, 8], fov: 50 }}>
         <color attach="background" args={['#1a1a1a']} />
         <ambientLight intensity={0.8} />
         <pointLight position={[10, 10, 10]} intensity={2} color="#c9a961" />
