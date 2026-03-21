@@ -26,7 +26,7 @@ function App() {
       {loading ? (
         <Loader />
       ) : (
-        <div className="relative min-h-screen bg-[#1a1a1a] text-[#e8e8e8]">
+        <div className="relative min-h-screen bg-[#1a1a1a] text-[#e8e8e8] w-full">
           <Navbar />
           <Hero />
           <Skills />
