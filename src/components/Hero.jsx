@@ -436,7 +436,7 @@ const Hero = () => {
             <p className="role" style={{ color: "#e0e0e0", fontSize: "1.5rem", margin: "10px 0" }}>
                 Web Developer &amp; Problem Solver
             </p>
-            <p className="bio" style={{ lineHeight: "1.6", color: "#cccccc" }}>
+            <p className="bio" style={{ lineHeight: "1.6", color: "white" }}>
                 I design and build modern, scalable, and responsive web applications
                 using technologies like React, JavaScript, and Node.js. I focus on
                 creating clean, efficient, and maintainable code that delivers
