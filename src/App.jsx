@@ -8,7 +8,6 @@ import Internship from './components/Internship';
 import Achievements from './components/Achievements';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
-import Footer from './components/Footer';
 import Loader from './components/Loader';
 
 function App() {
@@ -37,7 +36,6 @@ function App() {
           <Projects />
           <About />
           <Contact />
-          <Footer />
         </div>
       )}
     </>
