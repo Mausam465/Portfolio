@@ -10,33 +10,16 @@ const About = () => {
       
       {/* Main Content Container */}
       <motion.div
-        className="relative z-10 w-full max-w-6xl mx-auto px-6 flex flex-col lg:flex-row items-center gap-16"
+        className="relative z-10 w-full max-w-4xl mx-auto px-6 flex flex-col items-center justify-center text-center"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         viewport={{ once: true, margin: "-100px" }}
       >
         
-        {/* LEFT: PROFILE IMAGE - Circular */}
-        <motion.div
-          className="flex-shrink-0"
-          initial={{ scale: 0, opacity: 0, x: -50 }}
-          whileInView={{ scale: 1, opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          <div className="w-90 h-120 rounded-full overflow-hidden border-2 border-[#c9a961]/30 shadow-lg p-2 flex items-center justify-center bg-[#0a0a0a]">
-            <img 
-              src="https://ik.imagekit.io/vzxwc5boa/WhatsApp%20Image%202026-03-21%20at%207.05.43%20PM%20(1).jpeg" 
-              alt="Profile" 
-              className="w-full h-full object-cover object-top rounded-full hover:scale-105 transition-transform duration-500"
-            />
-          </div>
-        </motion.div>
-
         {/* RIGHT: CONTENT */}
         <motion.div
-          className="flex-1"
+          className="w-full"
           initial={{ opacity: 0, x: 50 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
@@ -45,10 +28,10 @@ const About = () => {
 
           {/* ABOUT ME HEADING - LETTER BY LETTER */}
           <motion.h1
-            className="text-5xl md:text-6xl font-light text-white mb-12 -ml-16"
+            className="text-5xl md:text-6xl font-light text-white mb-12"
             viewport={{ once: true, margin: "-100px" }}
           >
-            {['A', 'b', 'o', 'u', 't', ' '].map((letter, idx) => (
+            {['A', 'b', 'o', 'u', 't', '                                      '].map((letter, idx) => (
               <motion.span
                 key={idx}
                 initial={{ opacity: 0, y: 20 }}
@@ -78,12 +61,12 @@ const About = () => {
 
           {/* DECORATIVE LINE */}
           <motion.div
-            className="w-20 h-1 bg-[#c9a961] mb-12 -ml-16"
+            className="w-20 h-1 bg-[#c9a961] mb-12 mx-auto"
             initial={{ scaleX: 0, opacity: 0 }}
             whileInView={{ scaleX: 1, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.3 }}
             viewport={{ once: true, margin: "-100px" }}
-            style={{ transformOrigin: "left" }}
+            style={{ transformOrigin: "center" }}
           />
 
 
