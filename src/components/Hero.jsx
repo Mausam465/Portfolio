@@ -428,31 +428,29 @@ const Hero = () => {
 
             {/* TEXT SECTION (Initially hidden, revealed on scroll) */}
             <div id="text-section" ref={textRef}>
-            <p className="tag" style={{ color: "#c9a961", fontSize: "1.2rem", fontWeight: "500", marginBottom: "0.5rem" }}>Hello, I'm</p>
-            <h1 className="hero-heading">
+            <p className="tag" style={{ color: "#c9a961", fontSize: "clamp(0.9rem, 2.5vw, 1.2rem)", fontWeight: "600", marginBottom: "clamp(0.3rem, 1vw, 0.5rem)", letterSpacing: "0.5px" }}>Hello, I'm</p>
+            <h1 className="hero-heading" style={{ fontSize: "clamp(1.8rem, 6vw, 3.5rem)", lineHeight: "1.2", marginBottom: "clamp(0.8rem, 2vw, 1.2rem)" }}>
                 <span style={{ color: "#ffffff" }}>Mausam</span>
-                <span className="nm" style={{ color: "#c9a961", marginLeft: "12px" }}>Kumari</span>
+                <span className="nm" style={{ color: "#c9a961", marginLeft: "clamp(6px, 1.5vw, 12px)" }}>Kumari</span>
             </h1>
-            <p className="role" style={{ color: "#e0e0e0", fontSize: "1.5rem", margin: "10px 0" }}>
+            <p className="role" style={{ color: "#e0e0e0", fontSize: "clamp(0.95rem, 3vw, 1.5rem)", margin: "clamp(0.5rem, 1.5vw, 1rem) 0", fontWeight: "500" }}>
                 Web Developer &amp; Problem Solver
             </p>
-            <p className="bio" style={{ lineHeight: "1.6", color: "#cccccc" }}>
+            <p className="bio" style={{ lineHeight: "1.7", color: "#d0d0d0", fontSize: "clamp(0.85rem, 2.5vw, 1rem)", marginBottom: "clamp(1rem, 3vw, 2rem)" }}>
                 I design and build modern, scalable, and responsive web applications
                 using technologies like React, JavaScript, and Node.js. I focus on
                 creating clean, efficient, and maintainable code that delivers
-                seamless user experiences across different devices and platforms. Passionate about
-                turning ideas into real-world digital products, I enjoy solving complex
-                problems, exploring new technologies, and continuously improving my development skills.
+                seamless user experiences. Passionate about turning ideas into digital products.
             </p>
-            <div className="ctas" style={{ display: "flex", alignItems: "center", gap: "20px", marginTop: "30px" }}>
-                <a href="https://ik.imagekit.io/vzxwc5boa/Muasam_Final_CV.pdf?updatedAt=1773521178613" target="_blank" rel="noopener noreferrer" className="btn-hero bp" style={{ display: "flex", alignItems: "center", gap: "10px", padding: "12px 24px" }}>
-                Download Resume <FaDownload />
+            <div className="ctas" style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "clamp(12px, 2vw, 20px)", marginTop: "clamp(1.5rem, 4vw, 2rem)" }}>
+                <a href="https://ik.imagekit.io/vzxwc5boa/Muasam_Final_CV.pdf?updatedAt=1773521178613" target="_blank" rel="noopener noreferrer" className="btn-hero bp" style={{ display: "flex", alignItems: "center", gap: "clamp(6px, 1.5vw, 10px)", padding: "clamp(9px, 2vw, 12px) clamp(16px, 4vw, 24px)", fontSize: "clamp(0.85rem, 2.5vw, 1rem)", whiteSpace: "nowrap" }}>
+                <span>Resume</span> <FaDownload style={{ fontSize: "0.9em" }} />
                 </a>
                 
-                <div className="social-icons" style={{ display: "flex", gap: "20px", fontSize: "1.8rem" }}>
-                    <a href="https://github.com/" target="_blank" rel="noopener noreferrer" style={{ color: "#c9a961", transition: "all 0.3s" }} onMouseOver={(e) => e.currentTarget.style.color = "#fff"} onMouseOut={(e) => e.currentTarget.style.color = "#c9a961"}><FaGithub /></a>
-                    <a href="https://linkedin.com/" target="_blank" rel="noopener noreferrer" style={{ color: "#c9a961", transition: "all 0.3s" }} onMouseOver={(e) => e.currentTarget.style.color = "#fff"} onMouseOut={(e) => e.currentTarget.style.color = "#c9a961"}><FaLinkedin /></a>
-                    <a href="mailto:mausam@example.com" style={{ color: "#c9a961", transition: "all 0.3s" }} onMouseOver={(e) => e.currentTarget.style.color = "#fff"} onMouseOut={(e) => e.currentTarget.style.color = "#c9a961"}><FaEnvelope /></a>
+                <div className="social-icons" style={{ display: "flex", gap: "clamp(12px, 2.5vw, 20px)", fontSize: "clamp(1.3rem, 4vw, 1.8rem)" }}>
+                    <a href="https://github.com/" target="_blank" rel="noopener noreferrer" style={{ color: "#c9a961", transition: "all 0.3s" }} onMouseOver={(e) => e.currentTarget.style.color = "#fff"} onMouseOut={(e) => e.currentTarget.style.color = "#c9a961"}} title="GitHub"><FaGithub /></a>
+                    <a href="https://linkedin.com/" target="_blank" rel="noopener noreferrer" style={{ color: "#c9a961", transition: "all 0.3s" }} onMouseOver={(e) => e.currentTarget.style.color = "#fff"} onMouseOut={(e) => e.currentTarget.style.color = "#c9a961"}} title="LinkedIn"><FaLinkedin /></a>
+                    <a href="mailto:mausam@example.com" style={{ color: "#c9a961", transition: "all 0.3s" }} onMouseOver={(e) => e.currentTarget.style.color = "#fff"} onMouseOut={(e) => e.currentTarget.style.color = "#c9a961"}} title="Email"><FaEnvelope /></a>
                 </div>
             </div>
             </div>

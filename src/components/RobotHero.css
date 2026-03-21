@@ -110,8 +110,9 @@
 
 /* Scene (Robot) */
 #scene {
-  width: 320px;
-  height: 460px;
+  width: min(320px, 85vw);
+  height: auto;
+  aspect-ratio: 320/460;
   position: absolute;
   z-index: 5; /* Above background */
   perspective: 700px;
@@ -123,6 +124,13 @@
   
   /* Transitions handled by React/JS for scroll, but add simple transition for smoothness where JS might be jittery */
   will-change: left, transform;
+}
+
+/* Mobile optimization for smaller screens */
+@media (max-width: 480px) {
+  #scene {
+    width: min(280px, 80vw);
+  }
 }
 
 #robot-wrap {
@@ -175,6 +183,13 @@
 }
 
 /* If screen is small, stack them instead (handled via media query usually, but for this specific scroll interaction we might need to disable it on mobile or adjust logic) */
+@media (max-width: 1024px) {
+  #text-section {
+    width: 45%;
+    right: 5%;
+  }
+}
+
 @media (max-width: 768px) {
   .robot-hero-container {
     height: auto; /* disable scroll jack on mobile */
@@ -186,15 +201,18 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    padding-top: 80px;
-    padding-bottom: 50px;
+    padding-top: 60px;
+    padding-bottom: 40px;
+    padding-left: 16px;
+    padding-right: 16px;
   }
   #scene {
     position: relative;
     left: auto !important;
     top: auto !important;
     transform: none !important;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
+    width: min(280px, 85vw) !important;
   }
   #text-section {
     position: relative;
@@ -202,11 +220,52 @@
     top: auto;
     transform: none !important;
     opacity: 1 !important;
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
     text-align: center;
   }
   .scan { position: absolute; }
+  
+  /* Text styling adjustments for mobile */
+  .tag { font-size: 12px; margin-bottom: 8px; }
+  .hero-heading { font-size: 2rem; margin-bottom: 12px; }
+  .hero-heading .hi { font-size: 1.1rem; margin-bottom: 4px; }
+  .role { font-size: 1rem; margin-bottom: 16px; }
+  .bio { font-size: 0.9rem; line-height: 1.5; margin-bottom: 24px; }
+  .ctas { flex-wrap: wrap; gap: 12px; justify-content: center; }
+  .btn-hero { padding: 10px 20px; font-size: 0.85rem; }
+  
+  #pts { filter: blur(0.5px); opacity: 0.5; }
+  
+  .blob { display: none; }
+  
+  /* Hide cursor on mobile */
+  #cur { display: none; }
+  #cur-ring { display: none; }
+  
+  .sh { bottom: 30px; }
+}
+
+@media (max-width: 480px) {
+  .hero-sticky {
+    padding-top: 50px;
+    padding-bottom: 30px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  #scene {
+    margin-bottom: 20px;
+    width: min(260px, 80vw) !important;
+  }
+  
+  .tag { font-size: 11px; }
+  .hero-heading { font-size: 1.75rem; }
+  .hero-heading .hi { font-size: 1rem; }
+  .role { font-size: 0.9rem; margin-bottom: 12px; }
+  .bio { font-size: 0.85rem; margin-bottom: 16px; }
+  .btn-hero { padding: 8px 16px; font-size: 0.75rem; }
+  
+  .scan { background-size: 100% 2px; }
 }
 
 /* Animations from original file */
@@ -230,33 +289,116 @@
 @keyframes el { 0%, 100% { transform: rotate(0deg) } 30% { transform: rotate(4deg) } 60% { transform: rotate(-4deg) } }
 
 /* Text Styles */
-.tag { font-family: 'Share Tech Mono', monospace; color: var(--cyan); margin-bottom: 10px; display: block; font-size: 14px; }
-.hero-heading { font-family: 'Orbitron', sans-serif; font-size: 3.5rem; line-height: 1.1; margin-bottom: 15px; color: var(--white); text-shadow: 0 0 10px rgba(201,169,97,0.3); }
-.hero-heading .hi { display: block; font-size: 1.5rem; font-weight: 400; color: #ccc; margin-bottom: 5px; }
-.hero-heading .nm { color: var(--cyan); }
-.role { font-size: 1.2rem; margin-bottom: 20px; color: #bbb; display: flex; align-items: center; gap: 10px; }
-.bio { font-size: 0.95rem; line-height: 1.6; color: #888; margin-bottom: 30px; max-width: 500px; }
-.ctas { display: flex; gap: 20px; }
-.btn-hero { padding: 12px 28px; border-radius: 4px; text-decoration: none; font-weight: 600; font-family: 'Rajdhani', sans-serif; letter-spacing: 1px; transition: all 0.3s; position: relative; overflow: hidden; }
-.bp { background: var(--cyan); color: #000; border: 1px solid var(--cyan); }
-.bp:hover { background: transparent; color: var(--cyan); box-shadow: 0 0 15px rgba(201,169,97,0.4); }
-.bo { background: transparent; color: var(--cyan); border: 1px solid var(--cyan); }
-.bo:hover { background: rgba(201,169,97,0.1); color: #fff; border-color: #fff; }
+.tag { 
+  font-family: 'Share Tech Mono', monospace; 
+  color: var(--cyan); 
+  display: block; 
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.hero-heading { 
+  font-family: 'Orbitron', sans-serif; 
+  line-height: 1.1; 
+  color: var(--white); 
+  text-shadow: 0 0 10px rgba(201,169,97,0.3);
+  font-weight: 700;
+}
+.hero-heading .hi { 
+  display: block; 
+  font-weight: 400; 
+  color: #ccc; 
+}
+.hero-heading .nm { 
+  color: var(--cyan); 
+}
+.role { 
+  font-weight: 500;
+  color: #e0e0e0;
+  letter-spacing: 0.3px;
+}
+.bio { 
+  line-height: 1.7;
+  color: #d0d0d0; 
+  font-weight: 400;
+}
+.ctas { 
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(12px, 2vw, 20px);
+  align-items: center;
+}
+.btn-hero { 
+  border-radius: 4px; 
+  text-decoration: none; 
+  font-weight: 600; 
+  font-family: 'Rajdhani', sans-serif; 
+  letter-spacing: 1px; 
+  transition: all 0.3s; 
+  position: relative; 
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(6px, 1.5vw, 10px);
+  padding: clamp(8px, 1.8vw, 12px) clamp(14px, 3.5vw, 28px);
+  font-size: clamp(0.8rem, 2.2vw, 0.95rem);
+  white-space: nowrap;
+}
+.bp { 
+  background: var(--cyan); 
+  color: #000; 
+  border: 1px solid var(--cyan); 
+}
+.bp:hover { 
+  background: transparent; 
+  color: var(--cyan); 
+  box-shadow: 0 0 15px rgba(201,169,97,0.4); 
+}
+.bo { 
+  background: transparent; 
+  color: var(--cyan); 
+  border: 1px solid var(--cyan); 
+}
+.bo:hover { 
+  background: rgba(201,169,97,0.1); 
+  color: #fff; 
+  border-color: #fff; 
+}
 
 /* Scroll hint */
 .sh {
   position: absolute;
-  bottom: 20px;
+  bottom: clamp(15px, 3vw, 30px);
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: clamp(4px, 1vw, 8px);
   opacity: 0.7;
   transition: opacity 0.3s;
+  font-size: clamp(0.75rem, 2vw, 0.9rem);
 }
-.sa { width: 20px; height: 32px; border: 2px solid var(--cyan); border-radius: 12px; position: relative; }
-.sa::before { content: ''; position: absolute; top: 6px; left: 50%; transform: translateX(-50%); width: 2px; height: 6px; background: var(--cyan); border-radius: 2px; animation: sc 1.5s infinite; }
-@keyframes sc { 0% { top: 6px; opacity: 1; } 100% { top: 18px; opacity: 0; } }
+.sa { 
+  width: clamp(16px, 3vw, 20px); 
+  height: clamp(24px, 4vw, 32px); 
+  border: 2px solid var(--cyan); 
+  border-radius: 12px; 
+  position: relative; 
+}
+.sa::before { 
+  content: ''; 
+  position: absolute; 
+  top: 6px; 
+  left: 50%; 
+  transform: translateX(-50%); 
+  width: 2px; 
+  height: clamp(4px, 1vw, 6px); 
+  background: var(--cyan); 
+  border-radius: 2px; 
+  animation: sc 1.5s infinite; 
+}
+@keyframes sc { 
+  0% { top: 6px; opacity: 1; } 
+  100% { top: 18px; opacity: 0; } 
+}
 

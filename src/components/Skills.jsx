@@ -62,7 +62,22 @@ const ConnectionLine = ({ x2, y2, scrollYProgress }) => {
 
 const SkillNode = ({ skill, index, total, layer, scrollYProgress }) => {
     const isInner = layer === 'inner';
-    const radius = isInner ? 160 : 280; // Radius in pixels
+    
+    // Responsive radius based on screen size
+    const getRadius = () => {
+        if (typeof window === 'undefined') return isInner ? 160 : 280;
+        const width = window.innerWidth;
+        if (width < 640) {
+            return isInner ? 80 : 130;
+        } else if (width < 768) {
+            return isInner ? 100 : 160;
+        } else if (width < 1024) {
+            return isInner ? 130 : 220;
+        }
+        return isInner ? 160 : 280;
+    };
+    
+    const radius = getRadius();
     const itemsInLayer = isInner ? 6 : 10;
     const angleOffset = isInner ? 30 : 15; // Offset to stagger
     const angleDeg = (index * (360 / itemsInLayer)) + angleOffset;
@@ -89,12 +104,12 @@ const SkillNode = ({ skill, index, total, layer, scrollYProgress }) => {
                 style={{ x: xPos, y: yPos, scale, opacity }}
                 className="absolute flex items-center justify-center z-10"
             >
-                <Hexagon size={isInner ? "w-24 h-28 md:w-28 md:h-32" : "w-20 h-24 md:w-24 md:h-28"}>
-                    <div className="text-center p-1">
-                        <span className={`block font-bold ${isInner ? "text-xs md:text-sm text-[#e8e8e8]" : "text-[10px] md:text-xs text-gray-300"}`}>
+                <Hexagon size={isInner ? "w-16 h-20 sm:w-20 sm:h-24 md:w-24 md:h-28 lg:w-28 lg:h-32" : "w-14 h-18 sm:w-16 sm:h-20 md:w-20 md:h-24 lg:w-24 lg:h-28"}>
+                    <div className="text-center p-0.5 sm:p-1">
+                        <span className={`block font-bold text-[9px] sm:text-[10px] md:text-xs lg:text-sm ${isInner ? "text-[#e8e8e8]" : "text-gray-300"}`}>
                             {skill.name}
                         </span>
-                        <span className="block text-[8px] text-[#c9a961] uppercase tracking-widest mt-0.5">
+                        <span className="block text-[7px] sm:text-[8px] text-[#c9a961] uppercase tracking-widest mt-0.5">
                             {skill.category}
                         </span>
                     </div>

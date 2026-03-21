@@ -46,45 +46,45 @@ const Card = ({ i, title, description, src, image, url, github, live, tech, colo
     <div ref={container} className="h-screen flex items-top justify-center sticky top-0 md:top-12">
       <motion.div 
         style={{ scale, top: `calc(-5vh + ${i * 25}px)` }} 
-        className="flex flex-col relative h-auto md:h-[500px] w-full max-w-[1000px] rounded-3xl p-8 md:p-12 border border-[#c9a961] overflow-hidden shadow-2xl origin-top bg-[#1f1f1f]"
+        className="flex flex-col relative h-auto w-full max-w-full sm:max-w-[90%] md:max-w-[1000px] rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 border border-[#c9a961] overflow-hidden shadow-2xl origin-top bg-[#1f1f1f]"
       >
         
-        <div className="flex flex-col md:flex-row h-full gap-8 md:gap-12 relative z-10">
+        <div className="flex flex-col md:flex-row h-full gap-6 sm:gap-8 md:gap-12 relative z-10">
             
             {/* Project Info */}
-            <div className="w-full md:w-[45%] flex flex-col justify-between">
+            <div className="w-full md:w-[45%] flex flex-col justify-between min-w-0">
                 <div>
-                    <h3 className="text-3xl font-bold text-[#e8e8e8] mb-4 font-serif">{title}</h3>
-                    <p className="text-[#a8a8b8] text-base leading-relaxed mb-6">
+                    <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#e8e8e8] mb-3 sm:mb-4 font-serif leading-tight">{title}</h3>
+                    <p className="text-[#a8a8b8] text-sm sm:text-base leading-relaxed mb-4 sm:mb-6">
                         {description}
                     </p>
                     
-                    <div className="flex flex-wrap gap-2 mb-8">
+                    <div className="flex flex-wrap gap-2 mb-6 sm:mb-8">
                         {tech.map((t, idx) => (
-                             <span key={idx} className="text-xs px-3 py-1 bg-[#151515] text-[#c9a961] font-medium rounded-full border border-[#c9a961]/20">
+                             <span key={idx} className="text-[10px] sm:text-xs px-2.5 sm:px-3 py-1 bg-[#151515] text-[#c9a961] font-medium rounded-full border border-[#c9a961]/20">
                                 {t}
                              </span>
                         ))}
                     </div>
                 </div>
 
-                <div className="flex justify-center gap-4">
-                  <a href={live} className="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-lg bg-[#c9a961] hover:bg-[#b09252] text-[#1a1a1a] text-sm font-bold transition-all shadow-[0_4px_15px_rgba(201,169,97,0.3)] hover:shadow-[0_4px_25px_rgba(201,169,97,0.5)]">
-                    <FaExternalLinkAlt className="text-sm" /> Live Demo
+                <div className="flex gap-3 sm:gap-4">
+                  <a href={live} className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg bg-[#c9a961] hover:bg-[#b09252] text-[#1a1a1a] text-xs sm:text-sm font-bold transition-all shadow-[0_4px_15px_rgba(201,169,97,0.3)] hover:shadow-[0_4px_25px_rgba(201,169,97,0.5)] whitespace-nowrap">
+                    <FaExternalLinkAlt className="text-xs sm:text-sm" /> <span className="hidden sm:inline">Live Demo</span><span className="sm:hidden">Demo</span>
                   </a>
                 </div>
             </div>
 
             {/* Project Image */}
-            <div className="w-full md:w-[55%] md:self-center relative h-[250px] md:h-auto rounded-2xl overflow-hidden border border-[#c9a961]/10 shadow-lg">
+            <div className="w-full md:w-[55%] md:self-center relative h-[200px] sm:h-[250px] md:h-auto rounded-xl sm:rounded-2xl overflow-hidden border border-[#c9a961]/10 shadow-lg flex-shrink-0">
                 <motion.div 
-                    className="w-full"
+                    className="w-full h-full"
                     style={{ scale: imageScale }}
                 >
                     <img 
                         src={image} 
                         alt="project"
-                        className="w-full h-auto object-cover"
+                        className="w-full h-full object-cover"
                     />
                 </motion.div>
             </div>

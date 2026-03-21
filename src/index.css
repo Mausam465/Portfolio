@@ -19,7 +19,18 @@
     color: var(--color-text);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+    -webkit-touch-callout: none;
     overflow-x: hidden;
+    /* Optimize for mobile */
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  
+  /* Ensure minimum touch target size on mobile */
+  @media (max-width: 768px) {
+    button, a, input, textarea, select {
+      min-height: 44px;
+    }
   }
 }
 

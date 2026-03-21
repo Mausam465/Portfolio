@@ -60,7 +60,7 @@ const InternshipCard = ({ internship, index, scrollYProgress, totalItems }) => {
 
     return (
           <div
-            className={`mb-20 flex flex-col md:flex-row items-center justify-between w-full relative z-10 ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}
+            className={`mb-12 sm:mb-16 md:mb-20 flex flex-col md:flex-row items-center justify-between w-full relative z-10 ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}
           >
             <div className="hidden md:block w-5/12"></div>
 
@@ -71,10 +71,10 @@ const InternshipCard = ({ internship, index, scrollYProgress, totalItems }) => {
                     boxShadow: iconGlow,
                     scale: scale 
                 }}
-                className="z-20 flex items-center justify-center w-12 h-12 bg-[#242424] rounded-full border-2 absolute left-0 md:left-1/2 transform md:-translate-x-1/2"
+                className="z-20 flex items-center justify-center w-10 sm:w-12 h-10 sm:h-12 bg-[#242424] rounded-full border-2 absolute left-0 md:left-1/2 transform md:-translate-x-1/2"
             >
               <motion.div style={{ color: iconColor }}>
-                 <FaBriefcase className="text-lg" />
+                 <FaBriefcase className="text-base sm:text-lg" />
               </motion.div>
             </motion.div>
 
@@ -89,7 +89,7 @@ const InternshipCard = ({ internship, index, scrollYProgress, totalItems }) => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6 }}
-              className="w-full md:w-5/12 pl-12 md:pl-0"
+              className="w-full md:w-5/12 pl-12 sm:pl-16 md:pl-0"
             >
               <motion.div 
                 style={{ 
@@ -97,13 +97,13 @@ const InternshipCard = ({ internship, index, scrollYProgress, totalItems }) => {
                     background: bgGlow,
                     boxShadow: glow 
                 }}
-                className="glass p-6 rounded-2xl border border-[#c9a961]/10 transition-all duration-300"
+                className="glass p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl border border-[#c9a961]/10 transition-all duration-300"
               >
-                <span className="text-sm font-semibold text-[#c9a961] mb-2 inline-block px-3 py-1 bg-[#c9a961]/10 rounded-full">
+                <span className="text-xs sm:text-sm font-semibold text-[#c9a961] mb-2 inline-block px-2.5 sm:px-3 py-1 bg-[#c9a961]/10 rounded-full">
                   {internship.duration}
                 </span>
-                <h3 className="text-2xl font-bold mb-1 text-[#e8e8e8]">{internship.role}</h3>
-                <h4 className="text-lg text-[#a8a8b8] mb-4">
+                <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-1 text-[#e8e8e8] leading-tight">{internship.role}</h3>
+                <h4 className="text-sm sm:text-base md:text-lg text-[#a8a8b8] mb-3 sm:mb-4">
                   <a 
                     href={internship.link} 
                     target="_blank" 
@@ -113,9 +113,9 @@ const InternshipCard = ({ internship, index, scrollYProgress, totalItems }) => {
                     {internship.company}
                   </a>
                 </h4>
-                <ul className="list-disc list-inside space-y-2 text-[#a8a8b8]">
+                <ul className="list-disc list-inside space-y-1.5 sm:space-y-2 text-[#a8a8b8]">
                   {internship.description.map((item, i) => (
-                    <li key={i} className="text-sm leading-relaxed">{item}</li>
+                    <li key={i} className="text-xs sm:text-sm leading-relaxed">{item}</li>
                   ))}
                 </ul>
               </motion.div>
@@ -138,21 +138,21 @@ const Internship = () => {
   }).join(' ');
 
   return (
-  <section id="internship" className="py-24 relative z-10">
-    <div className="container mx-auto px-6 md:px-12">
-      <div className="text-center mb-16">
+  <section id="internship" className="py-16 sm:py-20 md:py-24 relative z-10">
+    <div className="container mx-auto px-4 sm:px-6 md:px-12">
+      <div className="text-center mb-12 sm:mb-14 md:mb-16">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-4xl md:text-5xl font-bold mb-4 text-[#e8e8e8]"
+          className="text-2xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 text-[#e8e8e8]"
         >
           My <span className="text-gradient">Internships</span>
         </motion.h2>
-        <div className="w-24 h-1 bg-[#c9a961] mx-auto rounded-full shadow-[0_0_10px_rgba(201,169,97,0.3)]"></div>
+        <div className="w-16 sm:w-20 md:w-24 h-0.5 sm:h-1 bg-[#c9a961] mx-auto rounded-full shadow-[0_0_10px_rgba(201,169,97,0.3)]"></div>
       </div>
 
-      <div ref={ref} className="max-w-4xl mx-auto relative pt-10 pb-10">
+      <div ref={ref} className="max-w-4xl mx-auto relative pt-6 sm:pt-8 md:pt-10 pb-6 sm:pb-8 md:pb-10">
         
         {/* Animated Curly Line */}
         <div className="absolute left-[19px] md:left-1/2 top-0 bottom-0 w-[100px] -translate-x-[50px] md:-translate-x-1/2 h-full z-0 overflow-hidden pointer-events-none">

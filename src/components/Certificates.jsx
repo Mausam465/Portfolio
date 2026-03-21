@@ -99,27 +99,27 @@ const Card = ({ cert, index, total, baseAngle, radius, spread }) => {
     <motion.div
       style={{ transform, transformStyle: "preserve-3d" }}
       onClick={() => window.open(cert.link, "_blank")}
-      className="absolute left-0 top-0 w-[180px] h-[260px] bg-[#1e1e1e]/90 backdrop-blur-md border border-[#c9a961]/20 rounded-xl overflow-hidden shadow-2xl cursor-pointer backface-visible"
+      className="absolute left-0 top-0 w-[140px] sm:w-[160px] md:w-[180px] h-[200px] sm:h-[230px] md:h-[260px] bg-[#1e1e1e]/90 backdrop-blur-md border border-[#c9a961]/20 rounded-lg sm:rounded-xl overflow-hidden shadow-2xl cursor-pointer backface-visible"
     >
-      <div className="relative h-[160px] overflow-hidden bg-[#2a2a2a] flex items-center justify-center">
+      <div className="relative h-[120px] sm:h-[140px] md:h-[160px] overflow-hidden bg-[#2a2a2a] flex items-center justify-center">
         {isPdf ? (
-            <div className="text-center p-4 flex flex-col items-center">
-                <FiFileText className="text-[#c9a961] text-5xl mb-2" />
-                <span className="text-sm text-gray-400">PDF Document</span>
+            <div className="text-center p-2 sm:p-3 flex flex-col items-center">
+                <FiFileText className="text-[#c9a961] text-3xl sm:text-4xl md:text-5xl mb-1" />
+                <span className="text-[10px] sm:text-xs text-gray-400">PDF</span>
             </div>
         ) : (
             <img src={cert.image} alt={cert.title} className="w-full h-full object-cover" />
         )}
         <div className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center">
-             <FiExternalLink className="text-[#c9a961] text-3xl" />
+             <FiExternalLink className="text-[#c9a961] text-2xl sm:text-3xl" />
         </div>
       </div>
-      <div className="p-4 flex flex-col justify-between h-[100px] bg-[#1e1e1e]">
+      <div className="p-2 sm:p-3 md:p-4 flex flex-col justify-between h-[80px] sm:h-[90px] md:h-[100px] bg-[#1e1e1e]">
         <div>
-            <h3 className="text-[#e8e8e8] font-bold text-base leading-tight mb-2 line-clamp-2">{cert.title}</h3>
-            <p className="text-[#c9a961] text-[10px] font-medium uppercase tracking-wider">{cert.issuer}</p>
+            <h3 className="text-[#e8e8e8] font-bold text-xs sm:text-sm md:text-base leading-tight mb-1 sm:mb-2 line-clamp-2">{cert.title}</h3>
+            <p className="text-[#c9a961] text-[8px] sm:text-[9px] md:text-[10px] font-medium uppercase tracking-wider">{cert.issuer}</p>
         </div>
-        <div className="w-full h-1 bg-[#c9a961]/20 rounded-full mt-2">
+        <div className="w-full h-0.5 sm:h-1 bg-[#c9a961]/20 rounded-full mt-1 sm:mt-2">
             <div className="w-1/2 h-full bg-[#c9a961] rounded-full"></div>
         </div>
       </div>
@@ -140,10 +140,22 @@ const Certificates = () => {
     restDelta: 0.001
   });
 
+  // Responsive radius based on screen size
+  const getMaxRadius = () => {
+    if (typeof window === 'undefined') return 500;
+    const width = window.innerWidth;
+    if (width < 640) return 200;
+    if (width < 768) return 280;
+    if (width < 1024) return 350;
+    return 500;
+  };
+
+  const maxRadius = getMaxRadius();
+
   // Animation values:
-  // 0 -> 0.2: Transition from Stack (0) to Ring (650)
+  // 0 -> 0.2: Transition from Stack (0) to Ring (maxRadius)
   // 0.2 -> 1: Rotate the ring
-  const radius = useTransform(smoothProgress, [0, 0.2], [0, 500]);
+  const radius = useTransform(smoothProgress, [0, 0.2], [0, maxRadius]);
   const spread = useTransform(smoothProgress, [0, 0.2], [0, 1]);
   const rotateY = useTransform(smoothProgress, [0, 0.2, 1], [0, 0, -360]);
 
@@ -157,22 +169,22 @@ const Certificates = () => {
         
         <motion.div 
             style={{ opacity: useTransform(scrollYProgress, [0, 0.1], [1, 0]) }}
-            className="absolute top-10 md:top-16 text-center z-20 pointer-events-none"
+            className="absolute top-6 sm:top-10 md:top-16 text-center z-20 pointer-events-none px-4"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-[#e8e8e8]">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 sm:mb-4 text-[#e8e8e8]">
             My <span className="text-[#c9a961]">Certificates</span>
           </h2>
-          <div className="w-24 h-1 bg-[#c9a961] mx-auto rounded-full shadow-[0_0_10px_rgba(201,169,97,0.3)]"></div>
+          <div className="w-16 sm:w-20 md:w-24 h-0.5 sm:h-1 bg-[#c9a961] mx-auto rounded-full shadow-[0_0_10px_rgba(201,169,97,0.3)]"></div>
         </motion.div>
 
         {/* Mobile Heading */}
-        <div className="relative w-full flex items-center justify-center mt-24 md:mt-32" style={{ perspective: "1000px" }}>
+        <div className="relative w-full flex items-center justify-center mt-16 md:mt-24 lg:mt-32" style={{ perspective: "1000px" }}>
             <motion.div 
                 style={{  
                     rotateY: rotateY,
                     transformStyle: "preserve-3d",
                 }}
-                className="relative w-[180px] h-[260px] flex items-center justify-center"
+                className="relative w-[140px] sm:w-[160px] md:w-[180px] h-[200px] sm:h-[230px] md:h-[260px] flex items-center justify-center"
             >
             {certificates.map((cert, index) => (
                 <Card
