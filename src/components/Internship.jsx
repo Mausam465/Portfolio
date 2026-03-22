@@ -15,7 +15,7 @@ const internships = [
     ],
   },
   {
-    role: 'Web Design Intern',
+    role: 'Software Developer Intern',
     company: 'AT Production Pvt. Ltd.',
     link: 'https://www.atproduction.net/',
     duration: 'Oct 2025 - Feb 2026',
