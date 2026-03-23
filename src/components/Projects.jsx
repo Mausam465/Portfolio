@@ -13,7 +13,7 @@ const projects = [
   {
     title: 'AT Production – CRM & Workforce Management Platform',
     description: 'A scalable CRM and workforce management system with real-time data handling, secure authentication, and Azure deployment for managing customers, employees, and operations.',
-    image: 'https://ik.imagekit.io/vzxwc5boa/Screenshot%202026-03-21%20183048.png',
+    image: 'https://ik.imagekit.io/atproduction/Screenshot%202026-03-23%20110243.png',
     tech: ['React', 'Node.js', 'MongoDB', 'Express', 'Azure', 'JWT Auth'],
     live: 'https://crm.atproduction.net/dashboard',
   },

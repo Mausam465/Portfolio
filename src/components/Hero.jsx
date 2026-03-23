@@ -293,7 +293,7 @@ const Hero = () => {
           {/* PROFILE IMAGE — same center as robot, crossfades in */}
           <div id="profile-image" ref={profileImageRef}>
             <img
-              src="https://ik.imagekit.io/vzxwc5boa/WhatsApp%20Image%202026-03-21%20at%207.05.43%20PM%20(1).jpeg?updatedAt=1774110376513"
+              src="https://ik.imagekit.io/atproduction/a00abd91-7e79-4434-bb5a-0b08f0b58319.jpg"
               alt="Mausam Kumari"
             />
           </div>
