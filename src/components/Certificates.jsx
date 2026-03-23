@@ -16,45 +16,45 @@ const certificates = [
     link: "https://ik.imagekit.io/vzxwc5boa/WhatsApp%20Image%202024-04-08%20at%2012.40.41%20AM.jpeg"
   },
   {
-    title: "Certificate Screenshot",
-    issuer: "Unknown",
-    image: "https://ik.imagekit.io/vzxwc5boa/Screenshot%202025-09-30%20224054.pdf",
+    title: "Java with OOPs",
+    issuer: "Ciper School",
+    image: "https://ik.imagekit.io/atproduction/Screenshot%202026-03-23%20111438.png",
     link: "https://ik.imagekit.io/vzxwc5boa/Screenshot%202025-09-30%20224054.pdf"
   },
   {
-    title: "Neo Collab Certificate",
+    title: "Computer Programming",
     issuer: "Neo Collab",
-    image: "https://ik.imagekit.io/vzxwc5boa/neo%20collab%20certificate.pdf",
+    image: "https://ik.imagekit.io/atproduction/Screenshot%202026-03-23%20111723.png",
     link: "https://ik.imagekit.io/vzxwc5boa/neo%20collab%20certificate.pdf"
   },
   {
-    title: "Mausam",
-    issuer: "Personal",
+    title: "Backend Development",
+    issuer: "Physics Wallah",
     image: "https://ik.imagekit.io/vzxwc5boa/Mausam.png",
     link: "https://ik.imagekit.io/vzxwc5boa/Mausam.png"
   },
   {
-    title: "Mausam Kumari",
-    issuer: "Personal",
+    title: "Introduction to Python",
+    issuer: "Infosys SpringBoard",
     image: "https://ik.imagekit.io/vzxwc5boa/Mausam%20kumari.png",
     link: "https://ik.imagekit.io/vzxwc5boa/Mausam%20kumari.png"
   },
   {
-    title: "Coursera Certificate",
+    title: "Digital Well-being",
     issuer: "Coursera",
-    image: "https://ik.imagekit.io/vzxwc5boa/Coursera_mausam.pdf",
+    image: "https://ik.imagekit.io/atproduction/Screenshot%202026-03-23%20112336.png",
     link: "https://ik.imagekit.io/vzxwc5boa/Coursera_mausam.pdf"
   },
   {
-    title: "Document",
-    issuer: "Unknown",
-    image: "https://ik.imagekit.io/vzxwc5boa/DOC-20250523-WA0005..pdf",
+    title: "Cloud Computing",
+    issuer: "IIT kharagpur",
+    image: "https://ik.imagekit.io/atproduction/Screenshot%202026-03-23%20112427.png",
     link: "https://ik.imagekit.io/vzxwc5boa/DOC-20250523-WA0005..pdf"
   },
   {
-    title: "CSE205 Certificate",
+    title: "DSA",
     issuer: "Neo Collab",
-    image: "https://ik.imagekit.io/vzxwc5boa/https___s3.amazonaws.com_exams-media_2027_StudentS%20certificate%20for%20CSE205_12315203@neocolab.ai.pdf",
+    image: "https://ik.imagekit.io/atproduction/Screenshot%202026-03-23%20112634.png",
     link: "https://ik.imagekit.io/vzxwc5boa/https___s3.amazonaws.com_exams-media_2027_StudentS%20certificate%20for%20CSE205_12315203@neocolab.ai.pdf"
   },
 ];
